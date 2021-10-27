@@ -4,12 +4,12 @@ namespace Sparkr\Port\Secondary\Database\MasterDataManagement\Skill\ModelDao;
 
 use Sparkr\Domain\MasterDataManagement\Skill\Models\Skill as SkillDomainModel;
 use Sparkr\Port\Secondary\Database\Base\BaseModel;
-//use Sparkr\Port\Secondary\Database\MasterDataManagement\Skill\Traits\SkillRelationshipTrait;
-//use Sparkr\Port\Secondary\Database\MasterDataManagement\Skill\Traits\HasFactory;
+use Sparkr\Port\Secondary\Database\MasterDataManagement\Skill\Traits\SkillRelationshipTrait;
+use Sparkr\Port\Secondary\Database\MasterDataManagement\Skill\Traits\HasFactory;
 
 class Skill extends BaseModel
 {
-//    use SkillRelationshipTrait, HasFactory;
+    use SkillRelationshipTrait, HasFactory;
 
     /**
      * @var string[]
