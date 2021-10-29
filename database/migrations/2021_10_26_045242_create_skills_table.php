@@ -14,9 +14,8 @@ class CreateSkillsTable extends Migration
     public function up()
     {
         Schema::create('skills', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('skill_name');
-            $table->tinyInteger('is_selectable')->default(1);
+            $table->increments('id');
+            $table->string('name');
             $table->timestamps();
         });
     }

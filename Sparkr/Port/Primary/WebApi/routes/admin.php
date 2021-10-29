@@ -17,17 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'namespace' => 'Sparkr\Port\Primary\WebApi\Controllers\Admin'
 ], function () {
-
-    // Skill Management
-    Route::prefix('skill')->group(function () {
-//        http://127.0.0.1:8000/admin/skill/
-        Route::get('/', 'SkillController@getAllSkills');
-        Route::post('/', 'SkillController@createSkill');
-//        http://127.0.0.1:8000/admin/skill/1
-        Route::put('/{id}', 'SkillController@updateSkill')->where('id',  '[0-9]+');
-        Route::delete('/{id}', 'SkillController@deleteSkill')->where('id',  '[0-9]+');
-    });
-
+//    admin/ping
     Route::get('ping', function () {
         return response('pong', 200);
 

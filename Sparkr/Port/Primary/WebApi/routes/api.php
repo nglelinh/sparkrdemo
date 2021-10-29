@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Sparkr\Port\Primary\WebApi\Controllers\Api\UserController;
 /*
 |--------------------------------------------------------------------------
 | Admin Routes

@@ -1,0 +1,49 @@
+<?php
+
+namespace Sparkr\Port\Secondary\Database\JobManagement\Job\ModelDao;
+
+use Sparkr\Domain\JobManagement\Job\Models\Job as JobDomainModel;
+use Sparkr\Port\Secondary\Database\Base\BaseModel;
+
+class Job extends BaseModel
+{
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'jobs';
+
+    public function toDomainEntity(): JobDomainModel
+    {
+        $job = new JobDomainModel(
+            $this->title,
+            $this->company_profile_id,
+            $this->job_type_id,
+            $this->availability_id,
+            $this->description,
+            $this->status,
+        );
+        $job->setId($this->getKey());
+
+        return $job;
+    }
+
+    /**
+     * @param JobDomainModel $job
+     * @return Job
+     */
+    protected function fromDomainEntity($job)
+    {
+        $this->title = $job->getTitle();
+        $this->company_profile_id = $job->getCompanyProfileId();
+        $this->job_type_id = $job->getJobTypeId();
+        $this->availability_id = $job->getAvailabilityId();
+        $this->description = $job->getDescription();
+        $this->status = $job->getStatus();
+
+        return $this;
+    }
+
+}

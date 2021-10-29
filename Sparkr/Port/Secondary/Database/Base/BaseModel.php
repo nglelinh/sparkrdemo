@@ -3,18 +3,16 @@
 namespace Sparkr\Port\Secondary\Database\Base;
 
 use Sparkr\Domain\Base\BaseDomainModel;
-//use Sparkr\Port\Secondary\Database\Base\Traits\FilterTrait;
-//use Sparkr\Port\Secondary\Database\Base\Traits\SearchTrait;
-//use Sparkr\Utility\Enums\Status;
+use Sparkr\Port\Secondary\Database\Base\Traits\FilterTrait;
+use Sparkr\Port\Secondary\Database\Base\Traits\SearchTrait;
+use Sparkr\Utility\Enums\Status;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection as CollectionDao;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
 abstract class BaseModel extends Model
 {
-//    use SearchTrait, FilterTrait;
+    use SearchTrait, FilterTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -29,10 +27,10 @@ abstract class BaseModel extends Model
      * @var array
      */
     protected array $filter = [
-//        'status' => [
-//            'Active' => Status::Active,
-//            'Inactive' => Status::Inactive
-//        ]
+        'status' => [
+            'Active' => Status::Active,
+            'Inactive' => Status::Inactive
+        ]
     ];
 
     /*
