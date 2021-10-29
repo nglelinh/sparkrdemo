@@ -3,6 +3,7 @@
 namespace Sparkr\Domain\ProfileManagement\CompanyProfile\Models;
 
 use Sparkr\Domain\Base\BaseDomainModel;
+use Sparkr\Domain\MasterDataManagement\Category\Models\Category;
 
 /**
  *
@@ -17,6 +18,7 @@ class CompanyProfile extends BaseDomainModel
 
     private ?int $categoryId;
 
+    private ?Category $category;
     /**
      * CompanyProfile constructor.
      * @param  string|null  $phone
@@ -94,6 +96,22 @@ class CompanyProfile extends BaseDomainModel
     public function setCategoryId(?int $categoryId): void
     {
         $this->categoryId = $categoryId;
+    }
+
+    /**
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param  Category|null  $category
+     */
+    public function setCategory(?Category $category): void
+    {
+        $this->category = $category;
     }
 
 

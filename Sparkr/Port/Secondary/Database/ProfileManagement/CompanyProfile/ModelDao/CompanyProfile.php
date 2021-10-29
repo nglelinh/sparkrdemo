@@ -4,10 +4,11 @@ namespace Sparkr\Port\Secondary\Database\ProfileManagement\CompanyProfile\ModelD
 
 use Sparkr\Domain\ProfileManagement\CompanyProfile\Models\CompanyProfile as CompanyProfileDomainModel;
 use Sparkr\Port\Secondary\Database\Base\BaseModel;
+use Sparkr\Port\Secondary\Database\ProfileManagement\CompanyProfile\Traits\CompanyProfileRelationshipTrait;
 
 class CompanyProfile extends BaseModel
 {
-
+    use CompanyProfileRelationshipTrait;
     /**
      * The table associated with the model.
      *
@@ -25,6 +26,9 @@ class CompanyProfile extends BaseModel
         );
         $companyProfile->setId($this->getKey());
 
+        if ($this->relationLoaded('category')) {
+            $companyProfile->setCategory($this->category->toDomainEntity());
+        }
         return $companyProfile;
     }
 

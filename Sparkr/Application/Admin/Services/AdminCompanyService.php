@@ -70,6 +70,8 @@ class AdminCompanyService
     {
 
         $companyProfile = $this->companyProfileRepository->getById($id);
+//        dd($companyProfile);
+
         $companyProfile->setPhone($param['phone']);
         $companyProfile->setCompanyWebsiteUrl($param['company_website_url']);
         $companyProfile->setEmployeeBenefits($param['employee_benefits']);

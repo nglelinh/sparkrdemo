@@ -4,10 +4,11 @@ namespace Sparkr\Port\Secondary\Database\MasterDataManagement\Category\ModelDao;
 
 use Sparkr\Domain\MasterDataManagement\Category\Models\Category as CategoryDomainModel;
 use Sparkr\Port\Secondary\Database\Base\BaseModel;
+use Sparkr\Port\Secondary\Database\MasterDataManagement\Category\Traits\CategoryProfileRelationshipTrait;
 
 class Category extends BaseModel
 {
-
+    use CategoryProfileRelationshipTrait;
     /**
      * The table associated with the model.
      *
