@@ -57,9 +57,9 @@ class User extends BaseDomainModel
     public function __construct(
         string $email,
         string $password,
+        ?string $name =null,
         ?int $userTypeId=null,
         ?int $experienceLevelId=null,
-        ?string $name =null,
         ?int $locationId=null,
         ?int $sparkCount=0,
         ?int $followingCount=0,

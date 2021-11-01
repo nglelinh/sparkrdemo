@@ -77,9 +77,9 @@ class AdminUserService
         $user = new User(
             $param['email'],
             $param['password'],
+            $param['name'],
             $param['user_type'],
-            $param['experience_level'],
-            $param['name']
+            $param['experience_level']
         );
         $userId = $this->userRepository->save($user)->getId();
 
