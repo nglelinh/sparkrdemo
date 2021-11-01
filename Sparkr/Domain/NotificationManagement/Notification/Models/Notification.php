@@ -29,9 +29,9 @@ class Notification extends BaseDomainModel
      * @param  int  $status
      */
     public function __construct(
-        string $type,
         string $title,
-        string $content,
+        string $type = null,
+        string $content = null,
         ?string $variables = null,
         int $status = Status::Active)
     {

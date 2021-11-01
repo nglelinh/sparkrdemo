@@ -48,9 +48,9 @@ class User extends BaseModel implements
         $user = new UserDomainModel(
             $this->email,
             $this->password,
-            $this->name,
             $this->user_type_id,
             $this->experience_level_id,
+            $this->name,
             $this->location_id,
             $this->spark_count,
             $this->following_count,
@@ -60,6 +60,10 @@ class User extends BaseModel implements
             $this->status,
         );
         $user->setId($this->getKey());
+
+        if ($this->relationLoaded('location')) {
+            $user->setLocation($this->location->toDomainEntity());
+        }
 
         return $user;
     }

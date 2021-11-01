@@ -3,27 +3,15 @@
 namespace Sparkr\Port\Secondary\Database\UserManagement\User\Traits;
 
 
-use Sparkr\Domain\ProfileManagement\CompanyProfile\Models\CompanyProfile;
-use Sparkr\Port\Secondary\Database\MasterDataManagement\Category\ModelDao\Category;
-use Sparkr\Port\Secondary\Database\ProfileManagement\PersonalProfile\ModelDao\PersonalProfile;
-use Sparkr\Port\Secondary\Database\UserManagement\User\ModelDao\User;
+use Sparkr\Port\Secondary\Database\MasterDataManagement\Location\ModelDao\Location;
 
 
 trait UserRelationshipTrait
 {
 
-    /**
-     * Get currency data
-     *
-     * @return mixed
-     */
-    public function personalProfile()
+    public function location()
     {
-        return $this->hasOne(PersonalProfile::class);
-    }
-    public function companyProfile()
-    {
-        return $this->hasOne(CompanyProfile::class);
+        return $this->belongsTo(Location::class);
     }
 
 }

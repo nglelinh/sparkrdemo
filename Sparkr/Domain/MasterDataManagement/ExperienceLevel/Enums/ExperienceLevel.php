@@ -12,8 +12,8 @@ use BenSampo\Enum\Enum;
  */
 final class ExperienceLevel extends Enum
 {
-    const EntryLevel = 1;
-    const Intermediate = 2;
-    const Expert = 3;
-    const Executive = 4;
+    const EntryLevel = 'Entry Level';
+    const Intermediate = 'Intermediate';
+    const Expert = 'Expert';
+    const Executive = 'Executive';
 }

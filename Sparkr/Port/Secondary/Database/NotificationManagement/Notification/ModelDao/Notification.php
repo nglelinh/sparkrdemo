@@ -18,8 +18,8 @@ class Notification extends BaseModel
     public function toDomainEntity(): NotificationDomainModel
     {
         $notification = new NotificationDomainModel(
-            $this->type,
             $this->title,
+            $this->type,
             $this->content,
             $this->variables,
             $this->status,
@@ -40,7 +40,7 @@ class Notification extends BaseModel
         $this->content = $notification->getContent();
         $this->variables = $notification->getVariables();
         $this->status = $notification->getStatus();
-        
+
         return $this;
     }
 

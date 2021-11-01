@@ -16,12 +16,12 @@ class Location extends BaseModel
 
     public function toDomainEntity(): LocationDomainModel
     {
-        $category = new LocationDomainModel(
+        $location = new LocationDomainModel(
             $this->name,
         );
-        $category->setId($this->getKey());
+        $location->setId($this->getKey());
 
-        return $category;
+        return $location;
     }
 
     /**

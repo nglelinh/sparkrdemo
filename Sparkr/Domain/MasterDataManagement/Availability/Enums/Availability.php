@@ -12,8 +12,8 @@ use BenSampo\Enum\Enum;
  */
 final class Availability extends Enum
 {
-    const FullTime = 1;
-    const PartTime = 2;
-    const Contract = 3;
-    const Internship = 4;
+    const FullTime = 'Full-time';
+    const PartTime = 'Part-time';
+    const Contract = 'Contract';
+    const Internship = 'Internship';
 }

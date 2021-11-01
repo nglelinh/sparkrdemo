@@ -2,16 +2,20 @@
 
 namespace Sparkr\Application\Admin\Services;
 
+use Sparkr\Domain\MasterDataManagement\UserType\Enums\UserType;
+use Sparkr\Domain\ProfileManagement\CompanyProfile\Interfaces\CompanyProfileRepositoryInterface;
+use Sparkr\Domain\ProfileManagement\CompanyProfile\Models\CompanyProfile;
+use Sparkr\Domain\ProfileManagement\PersonalProfile\Interfaces\PersonalProfileRepositoryInterface;
+use Sparkr\Domain\ProfileManagement\PersonalProfile\Models\PersonalProfile;
 use Sparkr\Domain\UserManagement\User\Interfaces\UserRepositoryInterface;
 use Sparkr\Domain\UserManagement\User\Models\User;
 use Illuminate\Http\Response;
 
 class AdminUserService
 {
-    /**
-     * @var UserRepositoryInterface
-     */
-    private $UserRepository;
+    private UserRepositoryInterface $userRepository;
+    private PersonalProfileRepositoryInterface $personalProfileRepository;
+    private CompanyProfileRepositoryInterface $companyProfileRepository;
 
     /**
      * @var int
@@ -30,9 +34,14 @@ class AdminUserService
 
     /**
      */
-    public function __construct(UserRepositoryInterface $UserRepository)
-    {
-        $this->UserRepository = $UserRepository;
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        PersonalProfileRepositoryInterface $personalProfileRepository,
+        CompanyProfileRepositoryInterface $companyProfileRepository
+    ) {
+        $this->userRepository = $userRepository;
+        $this->personalProfileRepository = $personalProfileRepository;
+        $this->companyProfileRepository = $companyProfileRepository;
 
         $this->status = Response::HTTP_OK;
         $this->message = __('api_messages.successful');
@@ -42,21 +51,20 @@ class AdminUserService
      */
     public function index(): array
     {
-        $this->data =  $this->UserRepository->getAllUser()->transform(function (User $User) {
+        $this->data =  $this->userRepository->getAllUser()->transform(function (User $user) {
             return [
-                'id' => $User->getId(),
-                'name' => $User->getName(),
-                'email' => $User->getEmail(),
-                'password' => $User->getPassword(),
-                'image' => $User->getImage(),
-                'user_type_id' => $User->getUserTypeId(),
-                'experience_level_id' => $User->getExperienceLevelId(),
-                'location_id' => $User->getLocationId(),
-                'spark_count' => $User->getSparkCount(),
-                'following_count' => $User->getFollowingCount(),
-                'followed_count' => $User->getFollowedCount(),
-                'last_login' => $User->getLastLogin(),
-                'status' => $User->getStatus(),
+                'id' => $user->getId(),
+                'name' => $user->getName(),
+                'email' => $user->getEmail(),
+                'image' => $user->getImage(),
+                'user_type_id' => $user->getUserTypeId(),
+                'experience_level_id' => $user->getExperienceLevelId(),
+//                'location' => $user->getLocation()?->getName(),
+                'spark_count' => $user->getSparkCount(),
+                'following_count' => $user->getFollowingCount(),
+                'followed_count' => $user->getFollowedCount(),
+                'last_login' => $user->getLastLogin(),
+                'status' => $user->getStatus(),
             ];
         })->toArray();
         return $this->handleApiResponse();
@@ -66,8 +74,22 @@ class AdminUserService
      */
     public function create(array $param): array
     {
-        $User = new User($param['email'], $param['password']);
-        $this->UserRepository->save($User);
+        $user = new User(
+            $param['email'],
+            $param['password'],
+            $param['user_type'],
+            $param['experience_level'],
+            $param['name']
+        );
+        $userId = $this->userRepository->save($user)->getId();
+
+        if ($param['user_type']==UserType::Personal){
+            $personalProfile = new PersonalProfile($userId, $param['desired_position']);
+            $this->personalProfileRepository->save($personalProfile);
+        }else{
+            $companyProfile = new CompanyProfile($userId, $param['category']);
+            $this->companyProfileRepository->save($companyProfile);
+        }
 
         return $this->handleApiResponse();
     }
@@ -77,10 +99,24 @@ class AdminUserService
     public function update(int $id, array $param): array
     {
 
-        $User = $this->UserRepository->getById($id);
-        $User->setName($param['name']);
+        $user = $this->userRepository->getById($id);
+        $user->setName($param['name']);
 
-        $this->UserRepository->save($User);
+        $this->userRepository->save($user);
+
+        return $this->handleApiResponse();
+    }
+
+    /**
+     */
+    public function updateStatus(int $id): array
+    {
+
+        $companyProfile = $this->companyProfileRepository->getById($id);
+
+        $companyProfile->getUser()->toggleStatus();
+
+        $this->companyProfileRepository->save($companyProfile);
 
         return $this->handleApiResponse();
     }
@@ -89,7 +125,7 @@ class AdminUserService
      */
     public function delete(int $id): array
     {
-        $this->UserRepository->delete($id);
+        $this->userRepository->delete($id);
 
         return $this->handleApiResponse();
     }

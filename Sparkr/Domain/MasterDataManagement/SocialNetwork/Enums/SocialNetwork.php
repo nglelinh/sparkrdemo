@@ -11,7 +11,7 @@ use BenSampo\Enum\Enum;
  */
 final class SocialNetwork extends Enum
 {
-    const Facebook = 1;
-    const Instagram = 2;
-    const Twitter = 3;
+    const Facebook = 'Facebook';
+    const Instagram = 'Instagram';
+    const Twitter = 'Twitter';
 }

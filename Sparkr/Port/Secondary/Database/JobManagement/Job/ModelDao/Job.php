@@ -4,10 +4,11 @@ namespace Sparkr\Port\Secondary\Database\JobManagement\Job\ModelDao;
 
 use Sparkr\Domain\JobManagement\Job\Models\Job as JobDomainModel;
 use Sparkr\Port\Secondary\Database\Base\BaseModel;
+use Sparkr\Port\Secondary\Database\JobManagement\Job\Traits\JobRelationshipTrait;
 
 class Job extends BaseModel
 {
-
+    use JobRelationshipTrait;
     /**
      * The table associated with the model.
      *
@@ -20,13 +21,19 @@ class Job extends BaseModel
         $job = new JobDomainModel(
             $this->title,
             $this->company_profile_id,
+            $this->description,
             $this->job_type_id,
             $this->availability_id,
-            $this->description,
             $this->status,
         );
         $job->setId($this->getKey());
 
+        if ($this->relationLoaded('jobType')) {
+            $job->setJobType($this->jobType->toDomainEntity());
+        }
+        if ($this->relationLoaded('companyProfile')) {
+            $job->setCompanyProfile($this->companyProfile->toDomainEntity());
+        }
         return $job;
     }
 

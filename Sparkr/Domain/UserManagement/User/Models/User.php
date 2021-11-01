@@ -4,6 +4,7 @@ namespace Sparkr\Domain\UserManagement\User\Models;
 
 use Carbon\Carbon;
 use Sparkr\Domain\Base\BaseDomainModel;
+use Sparkr\Domain\MasterDataManagement\Location\Models\Location;
 use Sparkr\Domain\UserManagement\User\Enums\UserStatus;
 use Sparkr\Utility\Enums\Status;
 
@@ -36,6 +37,8 @@ class User extends BaseDomainModel
 
     private ?int $status;
 
+    private ?Location $location;
+
     /**
      * User constructor.
      * @param  string  $email
@@ -54,9 +57,9 @@ class User extends BaseDomainModel
     public function __construct(
         string $email,
         string $password,
-        ?string $name =null,
         ?int $userTypeId=null,
         ?int $experienceLevelId=null,
+        ?string $name =null,
         ?int $locationId=null,
         ?int $sparkCount=0,
         ?int $followingCount=0,
@@ -278,6 +281,20 @@ class User extends BaseDomainModel
         $this->locationId = $locationId;
     }
 
+    /**
+     * @return Location|null
+     */
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
 
+    /**
+     * @param  Location|null  $location
+     */
+    public function setLocation(?Location $location): void
+    {
+        $this->location = $location;
+    }
 
 }

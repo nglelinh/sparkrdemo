@@ -27,7 +27,10 @@ class UserRepository extends EloquentBaseRepository implements UserRepositoryInt
 
     public function getAllUser(): Collection
     {
-        return $this->getAll();
+        $query = $this->model->with([
+//            'location'
+        ])->get();
+        return $this->transformCollection($query);
 
     }
 

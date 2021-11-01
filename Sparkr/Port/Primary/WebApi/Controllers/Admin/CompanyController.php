@@ -17,9 +17,9 @@ class CompanyController extends BaseController
 {
     /**
      */
-    public function list(AdminCompanyService $service): JsonResponse
+    public function index(AdminCompanyService $service): JsonResponse
     {
-        $response = $service->getAllCompanyProfile();
+        $response = $service->index();
 
         $this->setResponse($response['status'], $response['message'], $response['data']);
         return ApiResponseHandler::jsonResponse($this->status, $this->message,  $this->data);

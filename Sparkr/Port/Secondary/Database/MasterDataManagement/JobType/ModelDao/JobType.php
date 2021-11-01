@@ -16,12 +16,12 @@ class JobType extends BaseModel
 
     public function toDomainEntity(): JobTypeDomainModel
     {
-        $category = new JobTypeDomainModel(
+        $jobType = new JobTypeDomainModel(
             $this->name,
         );
-        $category->setId($this->getKey());
+        $jobType->setId($this->getKey());
 
-        return $category;
+        return $jobType;
     }
 
     /**

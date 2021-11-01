@@ -13,7 +13,7 @@ interface JobRepositoryInterface
 
     /**
      */
-    public function getById(int $id);
+    public function getById(int $id): Job;
 
     /**
      */

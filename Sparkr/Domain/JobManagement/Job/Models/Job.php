@@ -3,6 +3,8 @@
 namespace Sparkr\Domain\JobManagement\Job\Models;
 
 use Sparkr\Domain\Base\BaseDomainModel;
+use Sparkr\Domain\MasterDataManagement\JobType\Models\JobType;
+use Sparkr\Domain\ProfileManagement\CompanyProfile\Models\CompanyProfile;
 use Sparkr\Utility\Enums\Status;
 
 /**
@@ -22,6 +24,12 @@ class Job extends BaseDomainModel
 
     private int $status;
 
+    private JobType $jobType;
+
+    private CompanyProfile $companyProfile;
+
+
+
     /**
      * Job constructor.
      * @param  string  $title
@@ -34,9 +42,9 @@ class Job extends BaseDomainModel
     public function __construct(
         string $title,
         int $companyProfileId,
-        ?int $jobTypeId,
-        ?int $availabilityId,
         string $description,
+        ?int $jobTypeId = null,
+        ?int $availabilityId = null,
         int $status = Status::Active
     ) {
         $this->title = $title;
@@ -141,6 +149,38 @@ class Job extends BaseDomainModel
     public function setStatus(int $status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return JobType
+     */
+    public function getJobType(): JobType
+    {
+        return $this->jobType;
+    }
+
+    /**
+     * @param  JobType  $jobType
+     */
+    public function setJobType(JobType $jobType): void
+    {
+        $this->jobType = $jobType;
+    }
+
+    /**
+     * @return CompanyProfile
+     */
+    public function getCompanyProfile(): CompanyProfile
+    {
+        return $this->companyProfile;
+    }
+
+    /**
+     * @param  CompanyProfile  $companyProfile
+     */
+    public function setCompanyProfile(CompanyProfile $companyProfile): void
+    {
+        $this->companyProfile = $companyProfile;
     }
 
 

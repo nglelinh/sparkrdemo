@@ -25,7 +25,11 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
      */
     public function getAllPersonalProfile(): Collection
     {
-        return $this->getAll();
+        $query = $this->model->with([
+            'user',
+            'jobType',
+        ])->get();
+        return $this->transformCollection($query);
     }
 
     /**

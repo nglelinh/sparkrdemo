@@ -21,8 +21,8 @@ class PersonalProfile extends BaseModel
     {
         $personalProfile = new PersonalProfileDomainModel(
             $this->user_id,
-            $this->about,
             $this->desired_position,
+            $this->about,
             $this->education,
             $this->job_type_id,
             $this->availability_id,
@@ -31,6 +31,9 @@ class PersonalProfile extends BaseModel
 
         if ($this->relationLoaded('user')) {
             $personalProfile->setUser($this->user->toDomainEntity());
+        }
+        if ($this->relationLoaded('jobType')) {
+            $personalProfile->setJobType($this->jobType->toDomainEntity());
         }
         return $personalProfile;
     }

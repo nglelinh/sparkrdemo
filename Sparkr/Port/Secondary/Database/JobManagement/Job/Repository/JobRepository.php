@@ -25,7 +25,11 @@ class JobRepository extends EloquentBaseRepository implements JobRepositoryInter
      */
     public function getAllJob(): Collection
     {
-        return $this->getAll();
+        $query = $this->model->with([
+            'companyProfile.user',
+            'jobType'
+        ])->get();
+        return $this->transformCollection($query);
     }
 
     /**
@@ -39,9 +43,9 @@ class JobRepository extends EloquentBaseRepository implements JobRepositoryInter
         throw new \Exception(__('admin_messages.job_not_found'));
     }
 
-    public function save(Job $Job): Job
+    public function save(Job $job): Job
     {
-        return $this->createModelDAO($Job->getId())->saveData($Job);
+        return $this->createModelDAO($job->getId())->saveData($job);
     }
 
     public function delete(int $id)

@@ -3,6 +3,7 @@
 namespace Sparkr\Domain\ProfileManagement\PersonalProfile\Models;
 
 use Sparkr\Domain\Base\BaseDomainModel;
+use Sparkr\Domain\MasterDataManagement\JobType\Models\JobType;
 use Sparkr\Domain\UserManagement\User\Models\User;
 
 /**
@@ -24,6 +25,8 @@ class PersonalProfile extends BaseDomainModel
 
     private ?User $user;
 
+    private ?JobType $jobType;
+
     /**
      * PersonalProfile constructor.
      * @param  int|null  $userId
@@ -35,11 +38,11 @@ class PersonalProfile extends BaseDomainModel
      */
     public function __construct(
         ?int $userId,
-        ?string $about,
-        ?string $desired_position,
-        ?string $education,
-        ?int $jobTypeId,
-        ?int $availabilityId
+        ?string $desired_position = null,
+        ?string $about = null,
+        ?string $education = null,
+        ?int $jobTypeId = null,
+        ?int $availabilityId = null
     ) {
         $this->userId = $userId;
         $this->about = $about;
@@ -159,6 +162,22 @@ class PersonalProfile extends BaseDomainModel
     public function setUser(?User $user): void
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return JobType|null
+     */
+    public function getJobType(): ?JobType
+    {
+        return $this->jobType;
+    }
+
+    /**
+     * @param  JobType|null  $jobType
+     */
+    public function setJobType(?JobType $jobType): void
+    {
+        $this->jobType = $jobType;
     }
 
 

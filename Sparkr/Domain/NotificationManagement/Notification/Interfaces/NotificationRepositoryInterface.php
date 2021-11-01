@@ -3,6 +3,8 @@
 namespace Sparkr\Domain\NotificationManagement\Notification\Interfaces;
 
 
+use Sparkr\Domain\NotificationManagement\Notification\Models\Notification;
+
 interface NotificationRepositoryInterface
 {
     /**
@@ -11,7 +13,7 @@ interface NotificationRepositoryInterface
 
     /**
      */
-    public function getById(int $id);
+    public function getById(int $id): Notification;
 
     /**
      */

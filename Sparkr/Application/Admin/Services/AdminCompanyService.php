@@ -45,7 +45,7 @@ class AdminCompanyService
 
     /**
      */
-    public function getAllCompanyProfile(): array
+    public function index(): array
     {
         $this->data =  $this->companyProfileRepository->getAllCompanyProfile()->transform(function (CompanyProfile $companyProfile) {
             return [
@@ -54,8 +54,8 @@ class AdminCompanyService
                 'phone' => $companyProfile->getPhone(),
                 'company_website_url' => $companyProfile->getCompanyWebsiteUrl(),
                 'employee_benefits' => $companyProfile->getEmployeeBenefits(),
-                'category' => $companyProfile->getCategory()?->getName(),
-                'status' => $companyProfile->getUser()?->getStatus(),
+//                'category' => $companyProfile->getCategory()?->getName(),
+//                'status' => $companyProfile->getUser()?->getStatus(),
                 'experience_level' => $companyProfile->getUser()?->getExperienceLevelId(),
             ];
         })->toArray();
@@ -66,11 +66,7 @@ class AdminCompanyService
      */
     public function create(array $param): array
     {
-        // create User
-        $user = new User($param['email'],$param['password']);
-        $userId = $this->userRepository->save($user)->getId();
-        // create Company with FK user_id
-        $newCompany = new CompanyProfile($userId, $param['category_id']);
+        $newCompany = new CompanyProfile($param['user_id'], $param['category_id']);
         $this->companyProfileRepository->save($newCompany);
 
         return $this->handleApiResponse();
@@ -82,7 +78,7 @@ class AdminCompanyService
     {
 
         $companyProfile = $this->companyProfileRepository->getById($id);
-//        update some attributes
+
         $companyProfile->setPhone($param['phone']);
         $companyProfile->setCompanyWebsiteUrl($param['company_website_url']);
         $companyProfile->setEmployeeBenefits($param['employee_benefits']);

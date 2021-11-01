@@ -2,6 +2,8 @@
 
 return [
     'user_not_found' => 'User not found.',
+    'category_not_found' => 'Category not found.',
+    'company_not_found' => 'Company not found.',
     'user_status_not_found' => 'User status not found.',
     'invalid_coupon_type' => 'Coupon type invalid!',
     'can_only_apply_to_approved_female' => 'Can only apply to Approved Female user',

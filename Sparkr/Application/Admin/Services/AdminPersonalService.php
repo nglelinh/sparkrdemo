@@ -59,7 +59,7 @@ class AdminPersonalService
      */
     public function create(array $param): array
     {
-        $personalProfile = new PersonalProfile($param['about'], $param['desired_position'], $param['education'], $param['job_type_id'], $param['availability_id']);
+        $personalProfile = new PersonalProfile($param['user_id']);
         $this->personalProfileRepository->save($personalProfile);
 
         return $this->handleApiResponse();
@@ -77,6 +77,20 @@ class AdminPersonalService
         $personalProfile->setEducation($param['education']);
         $personalProfile->setJobTypeId($param['job_type_id']);
         $personalProfile->setAvailabilityId($param['availability_id']);
+
+        $this->personalProfileRepository->save($personalProfile);
+
+        return $this->handleApiResponse();
+    }
+
+    /**
+     */
+    public function updateStatus(int $id): array
+    {
+
+        $personalProfile = $this->personalProfileRepository->getById($id);
+
+        $personalProfile->getUser()->toggleStatus();
 
         $this->personalProfileRepository->save($personalProfile);
 

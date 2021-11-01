@@ -13,7 +13,7 @@ interface LocationRepositoryInterface
 
     /**
      */
-    public function getById(int $id);
+    public function getById(int $id): Location;
 
     /**
      */
