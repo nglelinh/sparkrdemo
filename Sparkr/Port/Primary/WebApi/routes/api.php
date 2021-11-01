@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'namespace' => 'Sparkr\Port\Primary\WebApi\Controllers\Api'
 ], function () {
+    Route::post('/login', 'LoginController@login');
 //    api/ping
     Route::get('ping', function () {
         return response('pong', 200);

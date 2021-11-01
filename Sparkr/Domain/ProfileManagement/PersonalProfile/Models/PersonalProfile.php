@@ -3,12 +3,15 @@
 namespace Sparkr\Domain\ProfileManagement\PersonalProfile\Models;
 
 use Sparkr\Domain\Base\BaseDomainModel;
+use Sparkr\Domain\UserManagement\User\Models\User;
 
 /**
  *
  */
 class PersonalProfile extends BaseDomainModel
 {
+    private ?int $userId;
+
     private ?string $about;
 
     private ?string $desired_position;
@@ -19,8 +22,11 @@ class PersonalProfile extends BaseDomainModel
 
     private ?int $availabilityId;
 
+    private ?User $user;
+
     /**
      * PersonalProfile constructor.
+     * @param  int|null  $userId
      * @param  string|null  $about
      * @param  string|null  $desired_position
      * @param  string|null  $education
@@ -28,17 +34,35 @@ class PersonalProfile extends BaseDomainModel
      * @param  int|null  $availabilityId
      */
     public function __construct(
+        ?int $userId,
         ?string $about,
         ?string $desired_position,
         ?string $education,
         ?int $jobTypeId,
         ?int $availabilityId
     ) {
+        $this->userId = $userId;
         $this->about = $about;
         $this->desired_position = $desired_position;
         $this->education = $education;
         $this->jobTypeId = $jobTypeId;
         $this->availabilityId = $availabilityId;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param  int|null  $userId
+     */
+    public function setUserId(?int $userId): void
+    {
+        $this->userId = $userId;
     }
 
     /**
@@ -119,6 +143,22 @@ class PersonalProfile extends BaseDomainModel
     public function setAvailabilityId(?int $availabilityId): void
     {
         $this->availabilityId = $availabilityId;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param  User|null  $user
+     */
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
     }
 
 

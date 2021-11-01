@@ -8,6 +8,7 @@ use Sparkr\Domain\ProfileManagement\CompanyProfile\Interfaces\CompanyProfileRepo
 use Sparkr\Domain\ProfileManagement\CompanyProfile\Models\CompanyProfile;
 use Sparkr\Port\Secondary\Database\Base\EloquentBaseRepository;
 use Sparkr\Port\Secondary\Database\ProfileManagement\CompanyProfile\ModelDao\CompanyProfile as CompanyProfileDao;
+use Sparkr\Port\Secondary\Database\UserManagement\User\ModelDao\User;
 
 class CompanyProfileRepository extends EloquentBaseRepository implements CompanyProfileRepositoryInterface
 {
@@ -23,9 +24,13 @@ class CompanyProfileRepository extends EloquentBaseRepository implements Company
 
     /**
      */
-    public function index(): Collection
+    public function getAllCompanyProfile()
     {
-        return $this->getAll();
+        $query = $this->model->with([
+            'user',
+            'category'
+        ])->get();
+        return $this->transformCollection($query);
     }
 
     /**

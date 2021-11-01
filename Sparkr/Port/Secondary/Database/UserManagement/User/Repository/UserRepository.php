@@ -3,6 +3,7 @@
 namespace Sparkr\Port\Secondary\Database\UserManagement\User\Repository;
 
 
+use Illuminate\Support\Collection;
 use Sparkr\Domain\UserManagement\User\Interfaces\UserRepositoryInterface;
 use Sparkr\Domain\UserManagement\User\Models\User;
 use Sparkr\Domain\UserManagement\User\Models\User as UserDomainModel;
@@ -22,6 +23,12 @@ class UserRepository extends EloquentBaseRepository implements UserRepositoryInt
     public function __construct(UserDao $model)
     {
         parent::__construct($model);
+    }
+
+    public function getAllUser(): Collection
+    {
+        return $this->getAll();
+
     }
 
     /**
@@ -49,4 +56,9 @@ class UserRepository extends EloquentBaseRepository implements UserRepositoryInt
         return $this->createModelDAO($user->getId())->saveData($user);
     }
 
+
+    public function delete(int $id)
+    {
+        return $this->createQuery()->where('id', $id)->delete();
+    }
 }

@@ -42,7 +42,7 @@ class AdminCategoryService
      */
     public function index(): array
     {
-        $this->data =  $this->categoryRepository->index()->transform(function (Category $category) {
+        $this->data =  $this->categoryRepository->getAllCategory()->transform(function (Category $category) {
             return [
                 'id' => $category->getId(),
                 'name' => $category->getName(),

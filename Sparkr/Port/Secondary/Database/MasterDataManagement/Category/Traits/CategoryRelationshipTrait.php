@@ -7,7 +7,7 @@ use Sparkr\Port\Secondary\Database\MasterDataManagement\Category\ModelDao\Catego
 use Sparkr\Port\Secondary\Database\ProfileManagement\CompanyProfile\ModelDao\CompanyProfile;
 
 
-trait CategoryProfileRelationshipTrait
+trait CategoryRelationshipTrait
 {
 
     /**

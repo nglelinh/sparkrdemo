@@ -4,6 +4,7 @@ namespace Sparkr\Port\Secondary\Database\ProfileManagement\CompanyProfile\Traits
 
 
 use Sparkr\Port\Secondary\Database\MasterDataManagement\Category\ModelDao\Category;
+use Sparkr\Port\Secondary\Database\UserManagement\User\ModelDao\User;
 
 
 trait CompanyProfileRelationshipTrait
@@ -19,4 +20,8 @@ trait CompanyProfileRelationshipTrait
         return $this->belongsTo(Category::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

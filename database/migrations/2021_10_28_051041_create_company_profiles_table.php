@@ -15,6 +15,7 @@ class CreateCompanyProfilesTable extends Migration
     {
         Schema::create('company_profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->unique();
             $table->string('phone')->nullable();
             $table->string('company_website_url')->nullable();
             $table->text('employee_benefits')->nullable();

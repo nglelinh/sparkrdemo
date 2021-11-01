@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('user_type_id')->nullable()
                 ->comment('1 = Person, 2 = Company');
             $table->unsignedInteger('experience_level_id')->nullable();
+            $table->unsignedInteger('location_id')->nullable();
             $table->integer('spark_count')->default(0)
                 ->comment("Number of sparks");
             $table->integer('following_count')->default(0);

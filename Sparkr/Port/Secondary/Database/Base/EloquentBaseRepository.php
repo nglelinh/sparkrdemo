@@ -466,4 +466,9 @@ class EloquentBaseRepository
     {
         $this->model->newModelQuery()->truncate();
     }
+
+//        public function save(CompanyProfile $companyProfile): CompanyProfile
+//    {
+//        return $this->createModelDAO($companyProfile->getId())->saveData($companyProfile);
+//    }
 }

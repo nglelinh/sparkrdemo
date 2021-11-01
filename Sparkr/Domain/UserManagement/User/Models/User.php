@@ -5,6 +5,7 @@ namespace Sparkr\Domain\UserManagement\User\Models;
 use Carbon\Carbon;
 use Sparkr\Domain\Base\BaseDomainModel;
 use Sparkr\Domain\UserManagement\User\Enums\UserStatus;
+use Sparkr\Utility\Enums\Status;
 
 /**
  *
@@ -21,6 +22,8 @@ class User extends BaseDomainModel
 
     private ?int $experienceLevelId;
 
+    private ?int $locationId;
+
     private ?int $sparkCount;
 
     private ?int $followingCount;
@@ -35,11 +38,12 @@ class User extends BaseDomainModel
 
     /**
      * User constructor.
-     * @param  string|null  $name
      * @param  string  $email
      * @param  string  $password
+     * @param  string|null  $name
      * @param  int|null  $userTypeId
      * @param  int|null  $experienceLevelId
+     * @param  int|null  $locationId
      * @param  int|null  $sparkCount
      * @param  int|null  $followingCount
      * @param  int|null  $followedCount
@@ -53,6 +57,7 @@ class User extends BaseDomainModel
         ?string $name =null,
         ?int $userTypeId=null,
         ?int $experienceLevelId=null,
+        ?int $locationId=null,
         ?int $sparkCount=0,
         ?int $followingCount=0,
         ?int $followedCount=0,
@@ -60,11 +65,13 @@ class User extends BaseDomainModel
         ?string $image=null,
         ?int $status=UserStatus::Active
     ) {
+//        dd($email);
         $this->setEmail($email);
         $this->setPassword($password);
         $this->setName($name);
         $this->setUserTypeId($userTypeId);
         $this->setExperienceLevelId($experienceLevelId);
+        $this->setLocationId($locationId);
         $this->setSparkCount($sparkCount);
         $this->setFollowingCount($followingCount);
         $this->setFollowedCount($followedCount);
@@ -248,6 +255,27 @@ class User extends BaseDomainModel
     public function setStatus(?int $status): void
     {
         $this->status = $status;
+    }
+
+    public function toggleStatus()
+    {
+        $this->status = $this->status == Status::Active ? Status::Inactive : Status::Active;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getLocationId(): ?int
+    {
+        return $this->locationId;
+    }
+
+    /**
+     * @param  int|null  $locationId
+     */
+    public function setLocationId(?int $locationId): void
+    {
+        $this->locationId = $locationId;
     }
 
 

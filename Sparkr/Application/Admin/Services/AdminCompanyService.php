@@ -5,13 +5,13 @@ namespace Sparkr\Application\Admin\Services;
 use Sparkr\Domain\ProfileManagement\CompanyProfile\Interfaces\CompanyProfileRepositoryInterface;
 use Sparkr\Domain\ProfileManagement\CompanyProfile\Models\CompanyProfile;
 use Illuminate\Http\Response;
+use Sparkr\Domain\UserManagement\User\Interfaces\UserRepositoryInterface;
+use Sparkr\Domain\UserManagement\User\Models\User;
 
 class AdminCompanyService
 {
-    /**
-     * @var CompanyProfileRepositoryInterface
-     */
-    private $companyProfileRepository;
+    private CompanyProfileRepositoryInterface $companyProfileRepository;
+    private UserRepositoryInterface $userRepository;
 
     /**
      * @var int
@@ -29,10 +29,15 @@ class AdminCompanyService
     private $data = [];
 
     /**
+     * @param  CompanyProfileRepositoryInterface  $companyProfileRepository
+     * @param  UserRepositoryInterface  $userRepository
      */
-    public function __construct(CompanyProfileRepositoryInterface $companyProfileRepository)
-    {
+    public function __construct(
+        CompanyProfileRepositoryInterface $companyProfileRepository,
+        UserRepositoryInterface $userRepository
+    ) {
         $this->companyProfileRepository = $companyProfileRepository;
+        $this->userRepository = $userRepository;
 
         $this->status = Response::HTTP_OK;
         $this->message = __('api_messages.successful');
@@ -40,15 +45,18 @@ class AdminCompanyService
 
     /**
      */
-    public function index(): array
+    public function getAllCompanyProfile(): array
     {
-        $this->data =  $this->companyProfileRepository->index()->transform(function (CompanyProfile $companyProfile) {
+        $this->data =  $this->companyProfileRepository->getAllCompanyProfile()->transform(function (CompanyProfile $companyProfile) {
             return [
                 'id' => $companyProfile->getId(),
+                'email' => $companyProfile->getUser()->getEmail(),
                 'phone' => $companyProfile->getPhone(),
                 'company_website_url' => $companyProfile->getCompanyWebsiteUrl(),
                 'employee_benefits' => $companyProfile->getEmployeeBenefits(),
-                'category_id' => $companyProfile->getCategoryId(),
+                'category' => $companyProfile->getCategory()?->getName(),
+                'status' => $companyProfile->getUser()?->getStatus(),
+                'experience_level' => $companyProfile->getUser()?->getExperienceLevelId(),
             ];
         })->toArray();
         return $this->handleApiResponse();
@@ -58,7 +66,11 @@ class AdminCompanyService
      */
     public function create(array $param): array
     {
-        $newCompany = new CompanyProfile($param['phone'], $param['company_website_url'], $param['employee_benefits'], $param['category_id']);
+        // create User
+        $user = new User($param['email'],$param['password']);
+        $userId = $this->userRepository->save($user)->getId();
+        // create Company with FK user_id
+        $newCompany = new CompanyProfile($userId, $param['category_id']);
         $this->companyProfileRepository->save($newCompany);
 
         return $this->handleApiResponse();
@@ -70,12 +82,25 @@ class AdminCompanyService
     {
 
         $companyProfile = $this->companyProfileRepository->getById($id);
-//        dd($companyProfile);
-
+//        update some attributes
         $companyProfile->setPhone($param['phone']);
         $companyProfile->setCompanyWebsiteUrl($param['company_website_url']);
         $companyProfile->setEmployeeBenefits($param['employee_benefits']);
         $companyProfile->setCategoryId($param['category_id']);
+
+        $this->companyProfileRepository->save($companyProfile);
+
+        return $this->handleApiResponse();
+    }
+
+    /**
+     */
+    public function updateStatus(int $id): array
+    {
+
+        $companyProfile = $this->companyProfileRepository->getById($id);
+
+        $companyProfile->getUser()->toggleStatus();
 
         $this->companyProfileRepository->save($companyProfile);
 

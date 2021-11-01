@@ -4,12 +4,15 @@ namespace Sparkr\Domain\ProfileManagement\CompanyProfile\Models;
 
 use Sparkr\Domain\Base\BaseDomainModel;
 use Sparkr\Domain\MasterDataManagement\Category\Models\Category;
+use Sparkr\Domain\UserManagement\User\Models\User;
 
 /**
  *
  */
 class CompanyProfile extends BaseDomainModel
 {
+    private ?int $userId;
+
     private ?string $phone;
 
     private ?string $companyWebsiteUrl;
@@ -19,19 +22,44 @@ class CompanyProfile extends BaseDomainModel
     private ?int $categoryId;
 
     private ?Category $category;
+
+    private ?User $user;
     /**
      * CompanyProfile constructor.
+     * @param  int|null  $userId
      * @param  string|null  $phone
      * @param  string|null  $companyWebsiteUrl
      * @param  string|null  $employeeBenefits
      * @param  int|null  $categoryId
      */
-    public function __construct(?string $phone, ?string $companyWebsiteUrl, ?string $employeeBenefits, ?int $categoryId)
-    {
+    public function __construct(
+        ?int $userId,
+        ?int $categoryId,
+        ?string $phone =null,
+        ?string $companyWebsiteUrl=null,
+        ?string $employeeBenefits=null,
+) {
+        $this->userId = $userId;
         $this->phone = $phone;
         $this->companyWebsiteUrl = $companyWebsiteUrl;
         $this->employeeBenefits = $employeeBenefits;
         $this->categoryId = $categoryId;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param  int|null  $userId
+     */
+    public function setUserId(?int $userId): void
+    {
+        $this->userId = $userId;
     }
 
     /**
@@ -112,6 +140,22 @@ class CompanyProfile extends BaseDomainModel
     public function setCategory(?Category $category): void
     {
         $this->category = $category;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param  User|null  $user
+     */
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
     }
 
 

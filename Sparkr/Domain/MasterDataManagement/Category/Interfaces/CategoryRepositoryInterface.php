@@ -9,7 +9,11 @@ interface CategoryRepositoryInterface
 {
     /**
      */
-    public function index();
+    public function getAllCategory();
+
+    /**
+     */
+    public function getByName(string $name = "");
 
     /**
      */

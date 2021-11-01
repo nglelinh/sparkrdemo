@@ -9,11 +9,11 @@ interface CompanyProfileRepositoryInterface
 {
     /**
      */
-    public function index();
+    public function getAllCompanyProfile();
 
     /**
      */
-    public function getById(int $id);
+    public function getById(int $id): CompanyProfile;
 
     /**
      */

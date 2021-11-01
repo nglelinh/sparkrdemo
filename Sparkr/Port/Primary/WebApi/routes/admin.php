@@ -18,11 +18,18 @@ Route::group([
     'namespace' => 'Sparkr\Port\Primary\WebApi\Controllers\Admin'
 ], function () {
 
+    // User
+    Route::prefix('user')->group(function () {
+
+    });
+
     // Company
     Route::prefix('company')->group(function () {
-        Route::get('/', 'CompanyController@index');
+        Route::get('/', 'CompanyController@list')->middleware('auth:api');
+        Route::get('/{id}', 'CompanyController@viewProfile');
         Route::post('create', 'CompanyController@create');
         Route::post('update/{id}', 'CompanyController@update');
+        Route::post('update-status/{id}', 'CompanyController@updateStatus');
         Route::post('delete/{id}', 'CompanyController@delete');
     });
     // Category

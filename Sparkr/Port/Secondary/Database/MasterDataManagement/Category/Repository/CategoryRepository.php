@@ -23,11 +23,22 @@ class CategoryRepository extends EloquentBaseRepository implements CategoryRepos
 
     /**
      */
-    public function index(): Collection
+    public function getAllCategory(): Collection
     {
         return $this->getAll();
     }
 
+    /**
+     */
+    public function getByName(string $name = ""): Collection
+    {
+        $query = $this->createQuery();
+        if (!empty($name)) {
+            $query->where('name', 'like', '%' . $name . '%');
+        }
+
+        return $this->transformCollection($query->get());
+    }
     /**
      */
     public function getById(int $id): Category
