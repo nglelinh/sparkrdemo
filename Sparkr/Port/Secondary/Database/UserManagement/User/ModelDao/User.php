@@ -9,17 +9,14 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Laravel\Passport\HasApiTokens;
 use Sparkr\Domain\UserManagement\User\Models\User as UserDomainModel;
 use Sparkr\Port\Secondary\Database\Base\BaseModel;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
 use Sparkr\Port\Secondary\Database\UserManagement\User\Traits\UserRelationshipTrait;
 
-class User extends BaseModel implements
-    AuthenticatableContract,
-    AuthorizableContract,
-    CanResetPasswordContract
+class User extends BaseModel implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
     use  UserRelationshipTrait, Notifiable, HasApiTokens;
     use Authenticatable, Authorizable, CanResetPassword, MustVerifyEmail;

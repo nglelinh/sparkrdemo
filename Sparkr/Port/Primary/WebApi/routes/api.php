@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Sparkr\Port\Primary\WebApi\Controllers\Api\AuthenticationController;
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
@@ -20,4 +22,18 @@ Route::group([
     Route::get('ping', function () {
         return response('pong', 200);
     });
+});
+
+Route::group([
+                 'prefix' => 'auth'
+             ], function () {
+    Route::post('login', [AuthenticationController::class, 'login']);
+    Route::post('signup', [AuthenticationController::class, 'signup']);
+
+//    Route::group([
+//                     'middleware' => 'auth:api'
+//                 ], function() {
+//        Route::delete('logout', 'AuthenticationController@logout');
+//        Route::get('me', 'AuthenticationController@user');
+//    });
 });
