@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Sparkr\Port\Primary\WebApi\Controllers\Api\AuthenticationController;
+use Sparkr\Port\Primary\WebApi\Controllers\Api\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +15,9 @@ use Sparkr\Port\Primary\WebApi\Controllers\Api\AuthenticationController;
 */
 
 Route::group([
-    'namespace' => 'Sparkr\Port\Primary\WebApi\Controllers\Api'
-], function () {
-    Route::post('/login', 'LoginController@login');
-//    api/ping
+                 'namespace' => 'Sparkr\Port\Primary\WebApi\Controllers\Api'
+             ], function () {
+    //    api/ping
     Route::get('ping', function () {
         return response('pong', 200);
     });
@@ -27,13 +26,12 @@ Route::group([
 Route::group([
                  'prefix' => 'auth'
              ], function () {
-    Route::post('login', [AuthenticationController::class, 'login']);
-    Route::post('signup', [AuthenticationController::class, 'signup']);
-
-//    Route::group([
-//                     'middleware' => 'auth:api'
-//                 ], function() {
-//        Route::delete('logout', 'AuthenticationController@logout');
-//        Route::get('me', 'AuthenticationController@user');
-//    });
+    Route::post('login', [AccountController::class, 'login']);
+    Route::post('signup', [AccountController::class, 'signup']);
+    Route::delete('logout', [AccountController::class, 'logout']);
+    Route::group([
+                     'middleware' => 'auth:api'
+                 ], function () {
+        Route::get('me', [AccountController::class, 'user']);
+    });
 });
