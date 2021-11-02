@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Sparkr\Port\Primary\WebApi\Controllers\Api\AccountController;
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
@@ -13,11 +15,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([
-    'namespace' => 'Sparkr\Port\Primary\WebApi\Controllers\Api'
-], function () {
-    Route::post('/login', 'LoginController@login');
-//    api/ping
+                 'namespace' => 'Sparkr\Port\Primary\WebApi\Controllers\Api'
+             ], function () {
+    //    api/ping
     Route::get('ping', function () {
         return response('pong', 200);
+    });
+});
+
+Route::group([
+                 'prefix' => 'auth'
+             ], function () {
+    Route::post('login', [AccountController::class, 'login']);
+    Route::post('signup', [AccountController::class, 'signup']);
+    Route::delete('logout', [AccountController::class, 'logout']);
+    Route::group([
+                     'middleware' => 'auth:api'
+                 ], function () {
+        Route::get('me', [AccountController::class, 'user']);
     });
 });

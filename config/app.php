@@ -182,6 +182,9 @@ return [
 
         // Bachelor Event Service Providers
         Sparkr\Application\Admin\Providers\EventServiceProvider::class,
+
+        // Passport
+        Laravel\Passport\PassportServiceProvider::class,
     ],
 
     /*
