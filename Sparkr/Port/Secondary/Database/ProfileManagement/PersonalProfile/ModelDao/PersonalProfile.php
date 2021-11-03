@@ -22,10 +22,12 @@ class PersonalProfile extends BaseModel
         $personalProfile = new PersonalProfileDomainModel(
             $this->user_id,
             $this->desired_position,
+            $this->current_position,
             $this->about,
             $this->education,
             $this->job_type_id,
-            $this->availability_id,
+            $this->availability,
+            $this->current_position,
         );
         $personalProfile->setId($this->getKey());
 
@@ -47,9 +49,10 @@ class PersonalProfile extends BaseModel
         $this->user_id = $personalProfile->getUserId();
         $this->about = $personalProfile->getAbout();
         $this->desired_position = $personalProfile->getDesiredPosition();
+        $this->current_position = $personalProfile->getCurrentPosition();
         $this->education = $personalProfile->getEducation();
         $this->job_type_id = $personalProfile->getJobTypeId();
-        $this->availability_id = $personalProfile->getAvailabilityId();
+        $this->availability = $personalProfile->getAvailabilityId();
 
         return $this;
     }

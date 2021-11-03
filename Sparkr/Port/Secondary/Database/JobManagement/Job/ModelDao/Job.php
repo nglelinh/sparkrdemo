@@ -23,7 +23,7 @@ class Job extends BaseModel
             $this->company_profile_id,
             $this->description,
             $this->job_type_id,
-            $this->availability_id,
+            $this->availability,
             $this->status,
         );
         $job->setId($this->getKey());
@@ -46,7 +46,7 @@ class Job extends BaseModel
         $this->title = $job->getTitle();
         $this->company_profile_id = $job->getCompanyProfileId();
         $this->job_type_id = $job->getJobTypeId();
-        $this->availability_id = $job->getAvailabilityId();
+        $this->availability = $job->getAvailability();
         $this->description = $job->getDescription();
         $this->status = $job->getStatus();
 

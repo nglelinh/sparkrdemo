@@ -22,7 +22,7 @@ class CreateJobHistoryTable extends Migration
             $table->timestamp('end_date');
             $table->text('description');
             $table->unsignedInteger('job_type_id')->nullable();
-            $table->unsignedInteger('availability_id')->nullable();
+            $table->tinyInteger('availability')->nullable();
             $table->timestamps();
         });
     }

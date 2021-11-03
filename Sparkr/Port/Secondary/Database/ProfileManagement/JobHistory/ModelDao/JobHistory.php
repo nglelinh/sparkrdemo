@@ -26,7 +26,7 @@ class JobHistory extends BaseModel
             Carbon::make($this->end_date),
             $this->description,
             $this->job_type_id,
-            $this->availability_id,
+            $this->availability,
         );
         $jobHistory->setId($this->getKey());
 
@@ -46,7 +46,7 @@ class JobHistory extends BaseModel
         $this->end_date = $jobHistory->getEndDate();
         $this->description = $jobHistory->getDescription();
         $this->job_type_id = $jobHistory->getJobTypeId();
-        $this->availability_id = $jobHistory->getAvailabilityId();
+        $this->availability = $jobHistory->getAvailabilityId();
 
         return $this;
     }

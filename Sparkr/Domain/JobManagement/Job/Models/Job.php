@@ -18,7 +18,7 @@ class Job extends BaseDomainModel
 
     private ?int $jobTypeId;
 
-    private ?int $availabilityId;
+    private ?int $availability;
 
     private string $description;
 
@@ -50,7 +50,7 @@ class Job extends BaseDomainModel
         $this->title = $title;
         $this->companyProfileId = $companyProfileId;
         $this->jobTypeId = $jobTypeId;
-        $this->availabilityId = $availabilityId;
+        $this->availability = $availabilityId;
         $this->description = $description;
         $this->status = $status;
     }
@@ -106,17 +106,17 @@ class Job extends BaseDomainModel
     /**
      * @return int|null
      */
-    public function getAvailabilityId(): ?int
+    public function getAvailability(): ?int
     {
-        return $this->availabilityId;
+        return $this->availability;
     }
 
     /**
-     * @param  int|null  $availabilityId
+     * @param  int|null  $availability
      */
-    public function setAvailabilityId(?int $availabilityId): void
+    public function setAvailability(?int $availability): void
     {
-        $this->availabilityId = $availabilityId;
+        $this->availability = $availability;
     }
 
     /**

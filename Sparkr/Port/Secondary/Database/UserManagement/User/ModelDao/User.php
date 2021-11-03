@@ -46,8 +46,8 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
             $this->email,
             $this->password,
             $this->name,
-            $this->user_type_id,
-            $this->experience_level_id,
+            $this->user_type,
+            $this->experience_level,
             $this->location_id,
             $this->spark_count,
             $this->following_count,
@@ -74,8 +74,8 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
         $this->name = $user->getName();
         $this->email = $user->getEmail();
         $this->password = $user->getPassword();
-        $this->user_type_id = $user->getUserTypeId();
-        $this->experience_level_id = $user->getExperienceLevelId();
+        $this->user_type = $user->getUserType();
+        $this->experience_level = $user->getExperienceLevel();
         $this->location_id = $user->getLocationId();
         $this->spark_count = $user->getSparkCount();
         $this->following_count = $user->getFollowingCount();

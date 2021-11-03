@@ -17,6 +17,13 @@ use Sparkr\Port\Primary\WebApi\Controllers\Api\AccountController;
 Route::group([
                  'namespace' => 'Sparkr\Port\Primary\WebApi\Controllers\Api'
              ], function () {
+    // Personal list view
+    Route::prefix('personal')->group(function () {
+        Route::get('/', 'PersonalController@personalProfileList');
+        Route::get('/basic-info/{userId}', 'PersonalController@basicPersonalInfo');
+        Route::get('/search', 'PersonalController@personalProfileListSearch');
+    });
+
     //    api/ping
     Route::get('ping', function () {
         return response('pong', 200);

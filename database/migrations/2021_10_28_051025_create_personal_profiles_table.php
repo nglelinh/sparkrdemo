@@ -18,9 +18,10 @@ class CreatePersonalProfilesTable extends Migration
             $table->unsignedBigInteger('user_id')->unique();
             $table->text('about')->nullable();
             $table->string('desired_position')->nullable();
+            $table->string('current_position')->nullable();
             $table->text('education')->nullable();
             $table->unsignedInteger('job_type_id')->nullable();
-            $table->unsignedInteger('availability_id')->nullable();
+            $table->tinyInteger('availability')->nullable();
             $table->timestamps();
         });
     }

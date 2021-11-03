@@ -19,9 +19,9 @@ class User extends BaseDomainModel
 
     private string $password;
 
-    private ?int $userTypeId;
+    private ?int $userType;
 
-    private ?int $experienceLevelId;
+    private ?int $experienceLevel;
 
     private ?int $locationId;
 
@@ -44,8 +44,8 @@ class User extends BaseDomainModel
      * @param  string  $email
      * @param  string  $password
      * @param  string|null  $name
-     * @param  int|null  $userTypeId
-     * @param  int|null  $experienceLevelId
+     * @param  int|null  $userType
+     * @param  int|null  $experienceLevel
      * @param  int|null  $locationId
      * @param  int|null  $sparkCount
      * @param  int|null  $followingCount
@@ -58,8 +58,8 @@ class User extends BaseDomainModel
         string $email,
         string $password,
         ?string $name =null,
-        ?int $userTypeId=null,
-        ?int $experienceLevelId=null,
+        ?int $userType=null,
+        ?int $experienceLevel=null,
         ?int $locationId=null,
         ?int $sparkCount=0,
         ?int $followingCount=0,
@@ -68,12 +68,11 @@ class User extends BaseDomainModel
         ?string $image=null,
         ?int $status=UserStatus::Active
     ) {
-//        dd($email);
         $this->setEmail($email);
         $this->setPassword($password);
         $this->setName($name);
-        $this->setUserTypeId($userTypeId);
-        $this->setExperienceLevelId($experienceLevelId);
+        $this->setUserType($userType);
+        $this->setExperienceLevel($experienceLevel);
         $this->setLocationId($locationId);
         $this->setSparkCount($sparkCount);
         $this->setFollowingCount($followingCount);
@@ -135,33 +134,33 @@ class User extends BaseDomainModel
     /**
      * @return int|null
      */
-    public function getUserTypeId(): ?int
+    public function getUserType(): ?int
     {
-        return $this->userTypeId;
+        return $this->userType;
     }
 
     /**
-     * @param  int|null  $userTypeId
+     * @param  int|null  $userType
      */
-    public function setUserTypeId(?int $userTypeId): void
+    public function setUserType(?int $userType): void
     {
-        $this->userTypeId = $userTypeId;
+        $this->userType = $userType;
     }
 
     /**
      * @return int|null
      */
-    public function getExperienceLevelId(): ?int
+    public function getExperienceLevel(): ?int
     {
-        return $this->experienceLevelId;
+        return $this->experienceLevel;
     }
 
     /**
-     * @param  int|null  $experienceLevelId
+     * @param  int|null  $experienceLevel
      */
-    public function setExperienceLevelId(?int $experienceLevelId): void
+    public function setExperienceLevel(?int $experienceLevel): void
     {
-        $this->experienceLevelId = $experienceLevelId;
+        $this->experienceLevel = $experienceLevel;
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Sparkr\Port\Secondary\Database\ProfileManagement\PersonalProfile\Trait
 
 
 use Sparkr\Port\Secondary\Database\MasterDataManagement\JobType\ModelDao\JobType;
+use Sparkr\Port\Secondary\Database\MasterDataManagement\Skill\ModelDao\Skill;
 use Sparkr\Port\Secondary\Database\UserManagement\User\ModelDao\User;
 
 
@@ -22,6 +23,10 @@ trait PersonalProfileRelationshipTrait
     public function jobType()
     {
         return $this->belongsTo(JobType::class);
+    }
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'spark_skill', 'personal_profile_id', 'skill_id' );
     }
 
 }
