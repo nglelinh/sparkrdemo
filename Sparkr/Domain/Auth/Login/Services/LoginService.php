@@ -1,16 +1,16 @@
 <?php
 
-namespace Sparkr\Domain\Register\Login\Services;
+namespace Sparkr\Domain\Auth\Login\Services;
 
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Passport\Client as OClient;
+use Sparkr\Domain\Auth\Token\Services\TokenService;
 use Sparkr\Domain\UserManagement\User\Interfaces\UserRepositoryInterface;
 use Sparkr\Domain\UserManagement\User\Models\User;
-use Laravel\Passport\Client as OClient;
 
 class LoginService
 {
@@ -20,12 +20,18 @@ class LoginService
 	private $userRepository;
 
 	/**
-	 * AdminSchoolService constructor.
-	 * @param UserRepositoryInterface $userRepository
+	 * @var TokenService
 	 */
-	public function __construct(UserRepositoryInterface $userRepository)
+	private $tokenService;
+
+	/**
+	 * @param UserRepositoryInterface $userRepository
+	 * @param TokenService $tokenService
+	 */
+	public function __construct(UserRepositoryInterface $userRepository, TokenService $tokenService)
 	{
 		$this->userRepository = $userRepository;
+		$this->tokenService = $tokenService;
 	}
 
 	/**
@@ -42,72 +48,12 @@ class LoginService
 		]);
 
 		if ($validator->fails()) {
-			return $this->handleApiResponse('fails', $validator->errors()->first());
+			return $this->handleApiResponse('error', $validator->errors()->first());
 		}
 		$newUser = new User($param['email'], bcrypt($param['password']), $param['name']);
 		$this->userRepository->save($newUser);
 
 		return $this->handleApiResponse();
-	}
-
-	/**
-	 * @param array $param
-	 * @return JsonResponse
-	 */
-	public function login(array $param): JsonResponse
-	{
-		$validator = Validator::make($param, [
-			'email' => 'required|string|email',
-			'password' => 'required|string',
-			'remember_me' => 'boolean'
-		]);
-
-		if ($validator->fails()) {
-			return $this->handleApiResponse('fails', $validator->errors()->first());
-		}
-
-		$credentials = ['email' => $param['email'], 'password' => $param['password']];
-
-		if (!Auth::attempt($credentials)) {
-			return $this->handleApiResponse('fails', 'Unauthorized', [], 401);
-		}
-        $oClient = OClient::where('password_client', 1)->first();
-		$response = Http::asForm()->post(url('/oauth/token'), [
-			'grant_type' => 'password',
-            'client_id' => $oClient->id,
-            'client_secret' => $oClient->secret,
-			'username' => $param['email'],
-			'password' => $param['password'],
-			'scope' => '*',
-		]);
-
-		$responseObj = $response->object();
-
-		if (isset($responseObj->error)) {
-			return $this->handleApiResponse('error', $responseObj->message);
-		}
-		$tokenData = [
-			'access_token' => $responseObj->access_token,
-			'token_type' => $responseObj->token_type,
-			'expires_at' => Carbon::parse(
-				Carbon::now()->getTimestamp() + $responseObj->expires_in
-			)->toDateTimeString(),
-			'refresh_token' => $responseObj->refresh_token,
-		];
-		return $this->handleApiResponse('success', 'Login success', $tokenData);
-	}
-
-	/**
-	 * @param Request $request
-	 * @return JsonResponse
-	 */
-	public function logout(Request $request): JsonResponse
-	{
-		Auth::logout();
-		$request->session()->invalidate();
-		$request->session()->regenerateToken();
-
-		return $this->handleApiResponse('success', 'Logout success');
 	}
 
 	/**
@@ -130,5 +76,54 @@ class LoginService
 									'message' => $message,
 									'data' => $data
 								], $code);
+	}
+
+	/**
+	 * @param array $param
+	 * @return JsonResponse
+	 */
+	public function login(array $param): JsonResponse
+	{
+		$validator = Validator::make($param, [
+			'email' => 'required|string|email',
+			'password' => 'required|string',
+			'remember_me' => 'boolean'
+		]);
+
+		if ($validator->fails()) {
+			return $this->handleApiResponse('error', $validator->errors()->first());
+		}
+
+		$credentials = ['email' => $param['email'], 'password' => $param['password']];
+
+		if (!Auth::attempt($credentials)) {
+			return $this->handleApiResponse('error', 'Unauthorized', [], 401);
+		}
+		$this->tokenService->revokeToken();
+		$oClient = OClient::where('password_client', 1)->first();
+		$response = Http::asForm()->post(url('/oauth/token'), [
+			'grant_type' => 'password',
+			'client_id' => $oClient->id,
+			'client_secret' => $oClient->secret,
+			'username' => $param['email'],
+			'password' => $param['password'],
+			'scope' => '*',
+		]);
+
+		return $this->tokenService->tokenOutput($response->object());
+	}
+
+	/**
+	 * @param Request $request
+	 * @return JsonResponse
+	 */
+	public function logout(Request $request): JsonResponse
+	{
+		$this->tokenService->revokeToken();
+		Auth::logout();
+		$request->session()->invalidate();
+		$request->session()->regenerateToken();
+
+		return $this->handleApiResponse('success', 'Logout success');
 	}
 }

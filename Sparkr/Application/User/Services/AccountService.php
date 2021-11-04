@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
+use Sparkr\Domain\Auth\Token\Services\TokenService;
 use Sparkr\Domain\UserManagement\User\Interfaces\UserRepositoryInterface;
 use Sparkr\Domain\UserManagement\User\Models\User;
-use Sparkr\Domain\Register\Login\Services\LoginService;
+use Sparkr\Domain\Auth\Login\Services\LoginService;
 use Laravel\Passport\Client as OClient;
 
 class AccountService
@@ -21,12 +22,19 @@ class AccountService
     private $loginService;
 
     /**
+     * @var TokenService
+     */
+    private $tokenService;
+
+    /**
      *
      * @param LoginService $loginService
+     * @param TokenService $tokenService
      */
-	public function __construct(LoginService $loginService)
+	public function __construct(LoginService $loginService, TokenService $tokenService)
 	{
 		$this->loginService = $loginService;
+		$this->tokenService = $tokenService;
 	}
 
 	/**
@@ -55,5 +63,14 @@ class AccountService
 	public function logout(Request $request): JsonResponse
 	{
 		return $this->loginService->logout($request);
+	}
+
+    /**
+     * @param array $param
+     * @return JsonResponse
+     */
+	public function refreshToken(array $param): JsonResponse
+	{
+		return $this->tokenService->refreshToken($param);
 	}
 }
