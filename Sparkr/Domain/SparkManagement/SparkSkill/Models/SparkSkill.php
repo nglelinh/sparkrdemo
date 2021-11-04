@@ -3,6 +3,8 @@
 namespace Sparkr\Domain\SparkManagement\SparkSkill\Models;
 
 use Sparkr\Domain\Base\BaseDomainModel;
+use Sparkr\Domain\MasterDataManagement\Skill\Models\Skill;
+use Sparkr\Domain\ProfileManagement\PersonalProfile\Models\PersonalProfile;
 
 /**
  *
@@ -14,6 +16,10 @@ class SparkSkill extends BaseDomainModel
     private int $skillId;
 
     private int $sparkSkillCount;
+
+    private Skill $skill;
+
+    private PersonalProfile $personalProfile;
 
     /**
      * SparkSkill constructor.
@@ -74,6 +80,38 @@ class SparkSkill extends BaseDomainModel
     public function setSparkSkillCount(int $sparkSkillCount): void
     {
         $this->sparkSkillCount = $sparkSkillCount;
+    }
+
+    /**
+     * @return Skill
+     */
+    public function getSkill(): Skill
+    {
+        return $this->skill;
+    }
+
+    /**
+     * @param  Skill  $skill
+     */
+    public function setSkill(Skill $skill): void
+    {
+        $this->skill = $skill;
+    }
+
+    /**
+     * @return PersonalProfile
+     */
+    public function getPersonalProfile(): PersonalProfile
+    {
+        return $this->personalProfile;
+    }
+
+    /**
+     * @param  PersonalProfile  $personalProfile
+     */
+    public function setPersonalProfile(PersonalProfile $personalProfile): void
+    {
+        $this->personalProfile = $personalProfile;
     }
 
 }

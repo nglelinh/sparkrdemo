@@ -62,15 +62,29 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
                     ->orWhere('about', 'LIKE', '%'.$params['keyword'].'%');
             });
         }
-        if (!empty($params['filters'])) {
+
+        $hasFilters = false;
+        foreach ($params['filters'] as $column => $value) {
+            if (!empty($value)) {
+                $hasFilters = true;
+                break;
+            }
+        }
+        if ($hasFilters) {
+            $query =  $query->join('users', 'users.id', '=', 'personal_profiles.user_id');
             foreach ($params['filters'] as $column => $value) {
-                if (empty($value)) {
-                    $query = $query->where($column, $value);
+                if (!empty($value)) {
+                    $query->where($column, $value);
                 }
             }
         }
-        if (!empty($params['sparkr'])) {
 
+        if (!empty($params['sparkr'])) {
+            $query = $query->select('personal_profiles.*')
+                ->join('spark_skill', 'spark_skill.personal_profile_id', '=', 'personal_profiles.id')
+                ->join('skills', 'skills.id', '=', 'spark_skill.skill_id')
+                ->where('skills.name', 'LIKE', '%'.$params['sparkr'].'%')
+                ->orderBy('spark_skill.spark_skill_count');
         }
 
         $eloquentModelCollection = $query->get();
@@ -87,7 +101,7 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
         if ($query) {
             return $query->toDomainEntity();
         }
-        throw new \Exception(__('admin_messages.company_not_found'));
+        throw new \Exception(__('admin_messages.personal_profile_not_found'));
     }
 
     /**
@@ -98,7 +112,7 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
         if ($query) {
             return $query->toDomainEntity();
         }
-        throw new \Exception(__('admin_messages.company_not_found'));
+        throw new \Exception(__('admin_messages.personal_profile_not_found'));
 
     }
 

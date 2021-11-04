@@ -17,10 +17,4 @@ class PersonalProfileDomainService
         $this->personalProfileRepository = $personalProfileRepository;
     }
 
-    public function getRecommendedPersonalProfile()
-    {
-        $result = $this->personalProfileRepository->getRecommendPersonalProfile();
-        return $result;
-    }
-
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Sparkr\Port\Primary\WebApi\Controllers\Api\AccountController;
+use Sparkr\Port\Primary\WebApi\Controllers\Api\PersonalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +20,9 @@ Route::group([
              ], function () {
     // Personal list view
     Route::prefix('personal')->group(function () {
-        Route::get('/', 'PersonalController@personalProfileList');
-        Route::get('/basic-info/{userId}', 'PersonalController@basicPersonalInfo');
-        Route::get('/search', 'PersonalController@personalProfileListSearch');
+        Route::get('/', [PersonalController::class, 'personalProfileList']);
+        Route::get('/basic-info/{userId}', [PersonalController::class, 'basicPersonalInfo']);
+        Route::get('/search', [PersonalController::class, 'personalProfileListSearch']);
     });
 
     //    api/ping

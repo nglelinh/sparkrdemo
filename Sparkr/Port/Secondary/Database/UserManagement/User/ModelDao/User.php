@@ -59,7 +59,7 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
         $user->setId($this->getKey());
 
         if ($this->relationLoaded('location')) {
-            $user->setLocation($this->location->toDomainEntity());
+            $user->setLocation($this->location?->toDomainEntity());
         }
 
         return $user;

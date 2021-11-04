@@ -11,9 +11,5 @@ use Sparkr\Port\Secondary\Database\UserManagement\User\ModelDao\User;
 
 trait SkillRelationshipTrait
 {
-    public function personalProfiles()
-    {
-        return $this->belongsToMany(PersonalProfile::class, 'spark_skill', 'skill_id', 'personal_profile_id');
-    }
 
 }

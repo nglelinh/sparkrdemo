@@ -24,9 +24,5 @@ trait PersonalProfileRelationshipTrait
     {
         return $this->belongsTo(JobType::class);
     }
-    public function skills()
-    {
-        return $this->belongsToMany(Skill::class, 'spark_skill', 'personal_profile_id', 'skill_id' );
-    }
 
 }

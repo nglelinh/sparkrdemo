@@ -32,10 +32,10 @@ class PersonalProfile extends BaseModel
         $personalProfile->setId($this->getKey());
 
         if ($this->relationLoaded('user')) {
-            $personalProfile->setUser($this->user->toDomainEntity());
+            $personalProfile->setUser($this->user?->toDomainEntity());
         }
         if ($this->relationLoaded('jobType')) {
-            $personalProfile->setJobType($this->jobType->toDomainEntity());
+            $personalProfile->setJobType($this->jobType?->toDomainEntity());
         }
         return $personalProfile;
     }

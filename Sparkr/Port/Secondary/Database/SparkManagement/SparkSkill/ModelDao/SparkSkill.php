@@ -4,10 +4,11 @@ namespace Sparkr\Port\Secondary\Database\SparkManagement\SparkSkill\ModelDao;
 
 use Sparkr\Domain\SparkManagement\SparkSkill\Models\SparkSkill as SparkSkillDomainModel;
 use Sparkr\Port\Secondary\Database\Base\BaseModel;
+use Sparkr\Port\Secondary\Database\SparkManagement\SparkSkill\Traits\SparkSkillRelationshipTrait;
 
 class SparkSkill extends BaseModel
 {
-
+    use SparkSkillRelationshipTrait;
     /**
      * The table associated with the model.
      *
@@ -23,6 +24,14 @@ class SparkSkill extends BaseModel
             $this->spark_skill_count,
         );
         $sparkSkill->setId($this->getKey());
+
+        if ($this->relationLoaded('skill')) {
+            $sparkSkill->setSkill($this->skill?->toDomainEntity());
+        }
+
+        if ($this->relationLoaded('personalProfile')) {
+            $sparkSkill->setPersonalProfile($this->personalProfile?->toDomainEntity());
+        }
 
         return $sparkSkill;
     }

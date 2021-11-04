@@ -23,7 +23,6 @@ class PersonalProfileService
 {
 
     private PersonalProfileRepositoryInterface $personalProfileRepository;
-    private PersonalProfileDomainService $personalProfileDomainService;
     private JobHistoryRepositoryInterface $jobHistoryRepository;
 
 
@@ -46,12 +45,10 @@ class PersonalProfileService
      */
     public function __construct(
         PersonalProfileRepositoryInterface $personalProfileRepository,
-        PersonalProfileDomainService $personalProfileDomainService,
         JobHistoryRepositoryInterface $jobHistoryRepository
     )
     {
         $this->personalProfileRepository = $personalProfileRepository;
-        $this->personalProfileDomainService = $personalProfileDomainService;
         $this->jobHistoryRepository = $jobHistoryRepository;
 
         $this->status = Response::HTTP_OK;
@@ -73,11 +70,13 @@ class PersonalProfileService
             $userId = $personalProfile->getUserId();
             $userName = $personalProfile->getUser()->getName();
             $currentPosition = $personalProfile->getCurrentPosition();
+            $image = $personalProfile->getUser()->getImage();
 
             $this->data[] = [
                 'id'=> $userId,
                 'name'=> $userName,
                 'current_position'=> $currentPosition,
+                'image'=> $image,
             ];
         }
 
@@ -94,12 +93,14 @@ class PersonalProfileService
             $userId = $personalProfile->getUserId();
             $userName = $personalProfile->getUser()->getName();
             $currentPosition = $personalProfile->getCurrentPosition();
+            $image = $personalProfile->getUser()->getImage();
             $sparkCount = $personalProfile->getUser()->getSparkCount();
 
             $this->data['recommendedList'] = [
                 'id'=> $userId,
                 'name'=> $userName,
                 'current_position'=> $currentPosition,
+                'image'=> $image,
                 'spark_count'=> $sparkCount,
             ];
         }
@@ -108,11 +109,13 @@ class PersonalProfileService
             $userId = $personalProfile->getUserId();
             $userName = $personalProfile->getUser()->getName();
             $currentPosition = $personalProfile->getCurrentPosition();
+            $image = $personalProfile->getUser()->getImage();
 
             $this->data['list'] = [
                 'id'=> $userId,
                 'name'=> $userName,
                 'current_position'=> $currentPosition,
+                'image'=> $image,
             ];
         }
         return $this->handleApiResponse();
