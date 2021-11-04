@@ -22,11 +22,12 @@ Route::group([
         return response('pong', 200);
     });
 });
+Route::post("/refreshToken/", [AccountController::class, 'refreshToken']);
 
 Route::group([
                  'prefix' => 'auth'
              ], function () {
-    Route::post('login', [AccountController::class, 'login']);
+    Route::post('login', [AccountController::class, 'login'])->name('login');
     Route::post('signup', [AccountController::class, 'signup']);
     Route::delete('logout', [AccountController::class, 'logout']);
     Route::group([

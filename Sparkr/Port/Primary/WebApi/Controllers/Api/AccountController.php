@@ -11,36 +11,46 @@ class AccountController extends BaseController
 {
     /**
      * @param Request $request
-     * @param AccountService $loginService
+     * @param AccountService $accountService
      * @return JsonResponse
      */
-    public function signup(Request $request, AccountService $loginService): JsonResponse
+    public function signup(Request $request, AccountService $accountService): JsonResponse
     {
-        return $loginService->signup($request->all());
+        return $accountService->signup($request->all());
     }
 
     /**
      * @param Request $request
-     * @param AccountService $loginService
+     * @param AccountService $accountService
      * @return JsonResponse
      */
-    public function login(Request $request, AccountService $loginService): JsonResponse
+    public function login(Request $request, AccountService $accountService): JsonResponse
     {
-        return $loginService->login($request->all());
+        return $accountService->login($request->all());
     }
 
     /**
      * @param Request $request
-     * @param AccountService $loginService
+     * @param AccountService $accountService
      * @return JsonResponse
      */
-    public function logout(Request $request, AccountService $loginService): JsonResponse
+    public function logout(Request $request, AccountService $accountService): JsonResponse
     {
-        return $loginService->logout($request);
+        return $accountService->logout($request);
     }
 
     public function user(Request $request)
     {
         return response()->json(['a'=>'a']);
+    }
+
+    /**
+     * @param Request $request
+     * @param AccountService $accountService
+     * @return JsonResponse
+     */
+    public function refreshToken(Request $request, AccountService $accountService): JsonResponse
+    {
+        return $accountService->refreshToken($request->all());
     }
 }
