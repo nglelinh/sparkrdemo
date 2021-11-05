@@ -18,8 +18,8 @@ class CreateJobHistoryTable extends Migration
             $table->unsignedBigInteger('personal_profile_id');
             $table->string('title');
             $table->string('company_name');
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
             $table->text('description');
             $table->unsignedInteger('job_type_id')->nullable();
             $table->unsignedInteger('availability_id')->nullable();
