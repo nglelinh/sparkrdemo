@@ -4,9 +4,11 @@ namespace Sparkr\Port\Secondary\Database\MasterDataManagement\Skill\ModelDao;
 
 use Sparkr\Domain\MasterDataManagement\Skill\Models\Skill as SkillDomainModel;
 use Sparkr\Port\Secondary\Database\Base\BaseModel;
+use Sparkr\Port\Secondary\Database\MasterDataManagement\Skill\Traits\SkillRelationshipTrait;
 
 class Skill extends BaseModel
 {
+    use SkillRelationshipTrait;
     /**
      * The table associated with the model.
      *

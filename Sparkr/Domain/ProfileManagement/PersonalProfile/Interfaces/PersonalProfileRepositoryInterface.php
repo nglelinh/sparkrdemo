@@ -3,6 +3,7 @@
 namespace Sparkr\Domain\ProfileManagement\PersonalProfile\Interfaces;
 
 
+use Illuminate\Support\Collection;
 use Sparkr\Domain\ProfileManagement\PersonalProfile\Models\PersonalProfile;
 
 interface PersonalProfileRepositoryInterface
@@ -13,7 +14,20 @@ interface PersonalProfileRepositoryInterface
 
     /**
      */
+    public function getRecommendPersonalProfile(): Collection;
+
+    public function getPersonalProfileList(): Collection;
+
+    /**
+     */
+    public function getSpecifiedPersonalProfile(array $params): Collection;
+
+    /**
+     */
     public function getById(int $id);
+    /**
+     */
+    public function getByUserId(int $id);
 
     /**
      */
@@ -23,5 +37,6 @@ interface PersonalProfileRepositoryInterface
      */
     public function delete(int $id);
 
+    public function getDetailByUserId(int $id): PersonalProfile;
 
 }

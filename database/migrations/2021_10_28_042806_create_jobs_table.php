@@ -19,7 +19,7 @@ class CreateJobsTable extends Migration
             $table->string('title');
             $table->unsignedBigInteger('company_profile_id');
             $table->unsignedInteger('job_type_id')->nullable();
-            $table->unsignedInteger('availability_id')->nullable();
+            $table->tinyInteger('availability')->nullable();
             $table->text('description');
             $table->tinyInteger('status')->default(Status::Active);
             $table->timestamps();

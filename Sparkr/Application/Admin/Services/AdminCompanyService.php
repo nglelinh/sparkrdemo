@@ -54,9 +54,9 @@ class AdminCompanyService
                 'phone' => $companyProfile->getPhone(),
                 'company_website_url' => $companyProfile->getCompanyWebsiteUrl(),
                 'employee_benefits' => $companyProfile->getEmployeeBenefits(),
-//                'category' => $companyProfile->getCategory()?->getName(),
-//                'status' => $companyProfile->getUser()?->getStatus(),
-                'experience_level' => $companyProfile->getUser()?->getExperienceLevelId(),
+                'category' => $companyProfile->getCategory()?->getName(),
+                'status' => $companyProfile->getUser()?->getStatus(),
+                'experience_level' => $companyProfile->getUser()?->getExperienceLevel(),
             ];
         })->toArray();
         return $this->handleApiResponse();

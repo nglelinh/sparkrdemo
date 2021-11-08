@@ -57,12 +57,12 @@ class AdminUserService
                 'name' => $user->getName(),
                 'email' => $user->getEmail(),
                 'image' => $user->getImage(),
-                'user_type_id' => $user->getUserTypeId(),
-                'experience_level_id' => $user->getExperienceLevelId(),
-//                'location' => $user->getLocation()?->getName(),
+                'user_type_id' => $user->getUserType(),
+                'experience_level_id' => $user->getExperienceLevel(),
+                'location' => $user->getLocation()?->getName(),
                 'spark_count' => $user->getSparkCount(),
                 'following_count' => $user->getFollowingCount(),
-                'followed_count' => $user->getFollowedCount(),
+                'followed_count' => $user->getFollowerCount(),
                 'last_login' => $user->getLastLogin(),
                 'status' => $user->getStatus(),
             ];
@@ -84,7 +84,7 @@ class AdminUserService
         $userId = $this->userRepository->save($user)->getId();
 
         if ($param['user_type']==UserType::Personal){
-            $personalProfile = new PersonalProfile($userId, $param['desired_position']);
+            $personalProfile = new User($userId, $param['desired_position']);
             $this->personalProfileRepository->save($personalProfile);
         }else{
             $companyProfile = new CompanyProfile($userId, $param['category']);

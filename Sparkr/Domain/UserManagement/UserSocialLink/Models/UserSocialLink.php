@@ -3,6 +3,7 @@
 namespace Sparkr\Domain\UserManagement\UserSocialLink\Models;
 
 use Sparkr\Domain\Base\BaseDomainModel;
+use Sparkr\Domain\UserManagement\User\Models\User;
 
 /**
  *

@@ -17,6 +17,8 @@ class PersonalProfile extends BaseDomainModel
 
     private ?string $desired_position;
 
+    private ?string $current_position;
+
     private ?string $education;
 
     private ?int $jobTypeId;
@@ -32,6 +34,7 @@ class PersonalProfile extends BaseDomainModel
      * @param  int|null  $userId
      * @param  string|null  $about
      * @param  string|null  $desired_position
+     * @param  string|null  $current_position
      * @param  string|null  $education
      * @param  int|null  $jobTypeId
      * @param  int|null  $availabilityId
@@ -39,6 +42,7 @@ class PersonalProfile extends BaseDomainModel
     public function __construct(
         ?int $userId,
         ?string $desired_position = null,
+        ?string $current_position = null,
         ?string $about = null,
         ?string $education = null,
         ?int $jobTypeId = null,
@@ -47,6 +51,7 @@ class PersonalProfile extends BaseDomainModel
         $this->userId = $userId;
         $this->about = $about;
         $this->desired_position = $desired_position;
+        $this->current_position = $current_position;
         $this->education = $education;
         $this->jobTypeId = $jobTypeId;
         $this->availabilityId = $availabilityId;
@@ -178,6 +183,22 @@ class PersonalProfile extends BaseDomainModel
     public function setJobType(?JobType $jobType): void
     {
         $this->jobType = $jobType;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCurrentPosition(): ?string
+    {
+        return $this->current_position;
+    }
+
+    /**
+     * @param  string|null  $current_position
+     */
+    public function setCurrentPosition(?string $current_position): void
+    {
+        $this->current_position = $current_position;
     }
 
 

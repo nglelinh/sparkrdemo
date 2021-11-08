@@ -20,9 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('email',100)->unique();
             $table->string('password');
             $table->string('image', 255)->nullable();
-            $table->unsignedInteger('user_type_id')->nullable()
+            $table->tinyInteger('user_type')->nullable()
                 ->comment('1 = Person, 2 = Company');
-            $table->unsignedInteger('experience_level_id')->nullable();
+            $table->tinyInteger('experience_level')->nullable();
             $table->unsignedInteger('location_id')->nullable();
             $table->integer('spark_count')->default(0)
                 ->comment("Number of sparks");
@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('last_login')->nullable();
             $table->tinyInteger('status')->default(UserStatus::Active)
                 ->comment('1 = Active, 0 = Inactive');
+            $table->timestamp('description')->nullable();
             $table->timestamps();
         });
     }

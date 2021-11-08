@@ -2,6 +2,7 @@
 
 namespace Sparkr\Domain\UserManagement\User\Interfaces;
 
+use Illuminate\Support\Collection;
 use Sparkr\Domain\UserManagement\User\Models\User;
 
 

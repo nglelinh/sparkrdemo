@@ -13,11 +13,12 @@ class CreateSparkSkillTable extends Migration
      */
     public function up()
     {
-        Schema::create('spark_skill', function (Blueprint $table) {
+        Schema::create('spark', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('personal_profile_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedInteger('skill_id');
-            $table->integer('spark_skill_count')->default(0);
+            $table->integer('spark_count')->default(0);
+            $table->integer('user_create_id')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateSparkSkillTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('spark_skill');
+        Schema::dropIfExists('spark');
     }
 }

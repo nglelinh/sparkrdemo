@@ -3,57 +3,92 @@
 namespace Sparkr\Domain\UserManagement\UserFollowing\Models;
 
 use Sparkr\Domain\Base\BaseDomainModel;
+use Sparkr\Domain\UserManagement\User\Models\User;
 
 /**
  *
  */
 class UserFollowing extends BaseDomainModel
 {
-    private int $following_user_id;
+    private int $followerId;
 
-    private int $followed_user_id;
+    private int $userId;
+    private User $follower;
+    private User $user;
 
     /**
      * UserFollowing constructor.
-     * @param  int  $following_user_id
-     * @param  int  $followed_user_id
+     * @param  int  $followerId
+     * @param  int  $userId
      */
-    public function __construct(int $following_user_id, int $followed_user_id)
+    public function __construct(int $followerId, int $userId)
     {
-        $this->following_user_id = $following_user_id;
-        $this->followed_user_id = $followed_user_id;
+        $this->followerId = $followerId;
+        $this->userId = $userId;
     }
 
     /**
      * @return int
      */
-    public function getFollowingUserId(): int
+    public function getFollowerId(): int
     {
-        return $this->following_user_id;
+        return $this->followerId;
     }
 
     /**
-     * @param  int  $following_user_id
+     * @param  int  $followerId
      */
-    public function setFollowingUserId(int $following_user_id): void
+    public function setFollowerId(int $followerId): void
     {
-        $this->following_user_id = $following_user_id;
+        $this->followerId = $followerId;
     }
 
     /**
      * @return int
      */
-    public function getFollowedUserId(): int
+    public function getUserId(): int
     {
-        return $this->followed_user_id;
+        return $this->userId;
     }
 
     /**
-     * @param  int  $followed_user_id
+     * @param  int  $userId
      */
-    public function setFollowedUserId(int $followed_user_id): void
+    public function setUserId(int $userId): void
     {
-        $this->followed_user_id = $followed_user_id;
+        $this->userId = $userId;
+    }
+
+    /**
+     * @return User
+     */
+    public function getFollower(): User
+    {
+        return $this->follower;
+    }
+
+    /**
+     * @param  User  $follower
+     */
+    public function setFollower(User $follower): void
+    {
+        $this->follower = $follower;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param  User  $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 
 

@@ -3,6 +3,7 @@
 namespace Sparkr\Domain\UserManagement\User\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Sparkr\Domain\Base\BaseDomainModel;
 use Sparkr\Domain\MasterDataManagement\Location\Models\Location;
 use Sparkr\Domain\UserManagement\User\Enums\UserStatus;
@@ -19,9 +20,9 @@ class User extends BaseDomainModel
 
     private string $password;
 
-    private ?int $userTypeId;
+    private ?int $userType;
 
-    private ?int $experienceLevelId;
+    private ?int $experienceLevel;
 
     private ?int $locationId;
 
@@ -29,7 +30,7 @@ class User extends BaseDomainModel
 
     private ?int $followingCount;
 
-    private ?int $followedCount;
+    private ?int $followerCount;
 
     private ?Carbon $lastLogin;
 
@@ -39,13 +40,19 @@ class User extends BaseDomainModel
 
     private ?Location $location;
 
+    private Collection $socialLinks;
+
+//    private Collection $sparkSkills;
+
+    private ?string $description;
+
     /**
      * User constructor.
      * @param  string  $email
      * @param  string  $password
      * @param  string|null  $name
-     * @param  int|null  $userTypeId
-     * @param  int|null  $experienceLevelId
+     * @param  int|null  $userType
+     * @param  int|null  $experienceLevel
      * @param  int|null  $locationId
      * @param  int|null  $sparkCount
      * @param  int|null  $followingCount
@@ -53,34 +60,36 @@ class User extends BaseDomainModel
      * @param  Carbon|null  $lastLogin
      * @param  string|null  $image
      * @param  int|null  $status
+     * @param  string|null  $description
      */
     public function __construct(
         string $email,
         string $password,
         ?string $name =null,
-        ?int $userTypeId=null,
-        ?int $experienceLevelId=null,
+        ?int $userType=null,
+        ?int $experienceLevel=null,
         ?int $locationId=null,
         ?int $sparkCount=0,
         ?int $followingCount=0,
         ?int $followedCount=0,
         ?Carbon $lastLogin=null,
         ?string $image=null,
-        ?int $status=UserStatus::Active
-    ) {
-//        dd($email);
+        ?int $status=UserStatus::Active,
+        ?string $description=null
+) {
         $this->setEmail($email);
         $this->setPassword($password);
         $this->setName($name);
-        $this->setUserTypeId($userTypeId);
-        $this->setExperienceLevelId($experienceLevelId);
+        $this->setUserType($userType);
+        $this->setExperienceLevel($experienceLevel);
         $this->setLocationId($locationId);
         $this->setSparkCount($sparkCount);
         $this->setFollowingCount($followingCount);
-        $this->setFollowedCount($followedCount);
+        $this->setFollowerCount($followedCount);
         $this->setLastLogin($lastLogin);
         $this->setImage($image);
         $this->setStatus($status);
+        $this->setDescription($description);
     }
 
 
@@ -135,33 +144,33 @@ class User extends BaseDomainModel
     /**
      * @return int|null
      */
-    public function getUserTypeId(): ?int
+    public function getUserType(): ?int
     {
-        return $this->userTypeId;
+        return $this->userType;
     }
 
     /**
-     * @param  int|null  $userTypeId
+     * @param  int|null  $userType
      */
-    public function setUserTypeId(?int $userTypeId): void
+    public function setUserType(?int $userType): void
     {
-        $this->userTypeId = $userTypeId;
+        $this->userType = $userType;
     }
 
     /**
      * @return int|null
      */
-    public function getExperienceLevelId(): ?int
+    public function getExperienceLevel(): ?int
     {
-        return $this->experienceLevelId;
+        return $this->experienceLevel;
     }
 
     /**
-     * @param  int|null  $experienceLevelId
+     * @param  int|null  $experienceLevel
      */
-    public function setExperienceLevelId(?int $experienceLevelId): void
+    public function setExperienceLevel(?int $experienceLevel): void
     {
-        $this->experienceLevelId = $experienceLevelId;
+        $this->experienceLevel = $experienceLevel;
     }
 
     /**
@@ -199,17 +208,17 @@ class User extends BaseDomainModel
     /**
      * @return int|null
      */
-    public function getFollowedCount(): ?int
+    public function getFollowerCount(): ?int
     {
-        return $this->followedCount;
+        return $this->followerCount;
     }
 
     /**
-     * @param  int|null  $followedCount
+     * @param  int|null  $followerCount
      */
-    public function setFollowedCount(?int $followedCount): void
+    public function setFollowerCount(?int $followerCount): void
     {
-        $this->followedCount = $followedCount;
+        $this->followerCount = $followerCount;
     }
 
     /**
@@ -295,6 +304,73 @@ class User extends BaseDomainModel
     public function setLocation(?Location $location): void
     {
         $this->location = $location;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getSocialLinks(): Collection
+    {
+        return $this->socialLinks;
+    }
+
+    /**
+     * @param  Collection  $socialLinks
+     */
+    public function setSocialLinks(Collection $socialLinks): void
+    {
+        $this->socialLinks = $socialLinks;
+    }
+
+//    /**
+//     * @return Collection
+//     */
+//    public function getSparkSkills(): Collection
+//    {
+//        return $this->sparkSkills;
+//    }
+//
+//    /**
+//     * @param  Collection  $sparkSkills
+//     */
+//    public function setSparkSkills(Collection $sparkSkills): void
+//    {
+//        $this->sparkSkills = $sparkSkills;
+//    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param  string|null  $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function addOneFollower(): void
+    {
+        $this->followerCount++;
+    }
+
+    public function addOneFollowing(): void
+    {
+        $this->followingCount++;
+    }
+    public function subtractOneFollower(): void
+    {
+        $this->followerCount--;
+    }
+
+    public function subtractOneFollowing(): void
+    {
+        $this->followingCount--;
     }
 
 }

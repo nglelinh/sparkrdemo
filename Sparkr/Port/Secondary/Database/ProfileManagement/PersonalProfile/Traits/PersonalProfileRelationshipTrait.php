@@ -4,6 +4,7 @@ namespace Sparkr\Port\Secondary\Database\ProfileManagement\PersonalProfile\Trait
 
 
 use Sparkr\Port\Secondary\Database\MasterDataManagement\JobType\ModelDao\JobType;
+use Sparkr\Port\Secondary\Database\MasterDataManagement\Skill\ModelDao\Skill;
 use Sparkr\Port\Secondary\Database\UserManagement\User\ModelDao\User;
 
 

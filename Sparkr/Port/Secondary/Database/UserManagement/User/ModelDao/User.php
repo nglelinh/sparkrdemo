@@ -40,14 +40,22 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
         'updated_at'
     ];
 
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+    ];
+
     public function toDomainEntity(): UserDomainModel
     {
         $user = new UserDomainModel(
             $this->email,
             $this->password,
             $this->name,
-            $this->user_type_id,
-            $this->experience_level_id,
+            $this->user_type,
+            $this->experience_level,
             $this->location_id,
             $this->spark_count,
             $this->following_count,
@@ -55,13 +63,23 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
             Carbon::make($this->last_login),
             $this->image,
             $this->status,
+            $this->description,
         );
         $user->setId($this->getKey());
 
         if ($this->relationLoaded('location')) {
-            $user->setLocation($this->location->toDomainEntity());
+            $user->setLocation($this->location?->toDomainEntity());
         }
-
+        if ($this->relationLoaded('socialLinks')) {
+            $user->setSocialLinks($this->socialLinks->map(function ($socialLinks) {
+                return $socialLinks->toDomainEntity();
+            }));
+        }
+        if ($this->relationLoaded('sparkSkills')) {
+            $user->setSparkSkills($this->sparkSkills->map(function ($sparkSkills) {
+                return $sparkSkills->toDomainEntity();
+            }));
+        }
         return $user;
     }
 
@@ -74,15 +92,16 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
         $this->name = $user->getName();
         $this->email = $user->getEmail();
         $this->password = $user->getPassword();
-        $this->user_type_id = $user->getUserTypeId();
-        $this->experience_level_id = $user->getExperienceLevelId();
+        $this->user_type = $user->getUserType();
+        $this->experience_level = $user->getExperienceLevel();
         $this->location_id = $user->getLocationId();
         $this->spark_count = $user->getSparkCount();
         $this->following_count = $user->getFollowingCount();
-        $this->followed_count = $user->getFollowedCount();
+        $this->followed_count = $user->getFollowerCount();
         $this->last_login = $user->getLastLogin();
         $this->image = $user->getImage();
         $this->status = $user->getStatus();
+        $this->description = $user->getDescription();
 
         return $this;
     }
