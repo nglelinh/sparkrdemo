@@ -13,10 +13,6 @@ interface CategoryRepositoryInterface
 
     /**
      */
-    public function getByName(string $name = "");
-
-    /**
-     */
     public function getById(int $id);
 
     /**
