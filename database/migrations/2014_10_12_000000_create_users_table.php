@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->integer('spark_count')->default(0)
                 ->comment("Number of sparks");
             $table->integer('following_count')->default(0);
-            $table->integer('followed_count')->default(0);
+            $table->integer('follower_count')->default(0);
             $table->timestamp('last_login')->nullable();
             $table->tinyInteger('status')->default(UserStatus::Active)
                 ->comment('1 = Active, 0 = Inactive');

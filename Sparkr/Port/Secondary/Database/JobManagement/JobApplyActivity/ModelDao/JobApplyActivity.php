@@ -13,7 +13,7 @@ class JobApplyActivity extends BaseModel
      *
      * @var string
      */
-    protected $table = 'job_apply_activity';
+    protected $table = 'job_apply_activities';
 
     public function toDomainEntity(): JobDomainModel
     {

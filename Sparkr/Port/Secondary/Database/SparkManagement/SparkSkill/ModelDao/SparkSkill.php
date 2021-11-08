@@ -14,7 +14,7 @@ class SparkSkill extends BaseModel
      *
      * @var string
      */
-    protected $table = 'spark';
+    protected $table = 'sparks';
 
     protected $with = [
 //        'skill',

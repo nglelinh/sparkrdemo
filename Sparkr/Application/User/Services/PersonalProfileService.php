@@ -149,7 +149,7 @@ class PersonalProfileService
         $socialLinks = $personalProfile->getUser()->getSocialLinks()->transform(function (UserSocialLink $socialLink) {
             return [
                 'url' => $socialLink->getUrl(),
-                'social_network_id' => $socialLink->getSocialNetworkId(),
+                'social_network' => $socialLink->getSocialNetwork(),
             ];
         })->toArray();
         $about = $personalProfile->getAbout();

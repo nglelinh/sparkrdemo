@@ -13,7 +13,7 @@ class CreateJobApplyActivityTable extends Migration
      */
     public function up()
     {
-        Schema::create('job_apply_activity', function (Blueprint $table) {
+        Schema::create('job_apply_activities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('job_id');
             $table->unsignedBigInteger('personal_profile_id');
@@ -28,6 +28,6 @@ class CreateJobApplyActivityTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('job_apply_activity');
+        Schema::dropIfExists('job_apply_activities');
     }
 }
