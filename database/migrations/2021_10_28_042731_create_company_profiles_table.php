@@ -21,6 +21,9 @@ class CreateCompanyProfilesTable extends Migration
             $table->text('employee_benefits')->nullable();
             $table->unsignedInteger('category_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

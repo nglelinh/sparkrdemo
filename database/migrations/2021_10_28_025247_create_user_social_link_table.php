@@ -19,6 +19,8 @@ class CreateUserSocialLinkTable extends Migration
             $table->unsignedInteger('social_network');
             $table->string('url');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 

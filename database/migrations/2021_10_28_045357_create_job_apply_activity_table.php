@@ -18,6 +18,9 @@ class CreateJobApplyActivityTable extends Migration
             $table->unsignedBigInteger('job_id');
             $table->unsignedBigInteger('personal_profile_id');
             $table->timestamps();
+
+            $table->foreign('personal_profile_id')->references('id')->on('personal_profiles')->cascadeOnDelete();
+            $table->foreign('job_id')->references('id')->on('jobs')->cascadeOnDelete();
         });
     }
 

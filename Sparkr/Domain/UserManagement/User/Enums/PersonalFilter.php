@@ -5,8 +5,10 @@ namespace Sparkr\Domain\UserManagement\User\Enums;
 use Sparkr\Utility\Enums\IntEnum;
 
 /**
- * @method static static Active()
- * @method static static Inactive()
+ * @method static static ExperienceLevel()
+ * @method static static JobTypeId()
+ * @method static static LocationId()
+ * @method static static Availability()
  */
 final class PersonalFilter extends IntEnum
 {

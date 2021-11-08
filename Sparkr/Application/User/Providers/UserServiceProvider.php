@@ -22,6 +22,7 @@ use Sparkr\Port\Secondary\Database\JobManagement\Job\Repository\JobRepository;
 use Sparkr\Port\Secondary\Database\JobManagement\JobApplyActivity\Repository\JobApplyActivityRepository;
 use Sparkr\Port\Secondary\Database\JobManagement\JobInterestedActivity\Repository\JobInterestedActivityRepository;
 use Sparkr\Port\Secondary\Database\MasterDataManagement\Category\Repository\CategoryRepository;
+use Sparkr\Port\Secondary\Database\MasterDataManagement\JobType\Repository\JobTypeRepository;
 use Sparkr\Port\Secondary\Database\MasterDataManagement\Skill\Repository\SkillRepository;
 use Sparkr\Port\Secondary\Database\NotificationManagement\Notification\Repository\NotificationRepository;
 use Sparkr\Port\Secondary\Database\NotificationManagement\UserNotification\Repository\UserNotificationRepository;
@@ -54,7 +55,7 @@ class UserServiceProvider extends ServiceProvider
         $this->app->bind(JobRepositoryInterface::class,JobRepository::class);
         $this->app->bind(JobApplyActivityRepositoryInterface::class,JobApplyActivityRepository::class);
         $this->app->bind(JobInterestedActivityRepositoryInterface::class,JobInterestedActivityRepository::class);
-        $this->app->bind(JobTypeRepositoryInterface::class,SkillRepository::class);
+        $this->app->bind(JobTypeRepositoryInterface::class,JobTypeRepository::class);
         $this->app->bind(NotificationRepositoryInterface::class,NotificationRepository::class);
         $this->app->bind(UserNotificationRepositoryInterface::class,UserNotificationRepository::class);
         $this->app->bind(CompanyProfileRepositoryInterface::class,CompanyProfileRepository::class);

@@ -18,6 +18,9 @@ class CreateSparkDetailsTable extends Migration
             $table->unsignedBigInteger('spark_id');
             $table->unsignedBigInteger('spark_from_user_id');
             $table->timestamps();
+
+            $table->foreign('spark_from_user_id')->references('id')->on('users');
+            $table->foreign('spark_id')->references('id')->on('sparks')->cascadeOnDelete();
         });
     }
 

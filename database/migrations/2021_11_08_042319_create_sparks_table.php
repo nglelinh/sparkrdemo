@@ -18,8 +18,12 @@ class CreateSparksTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedInteger('skill_id');
             $table->integer('spark_count')->default(0);
-            $table->integer('user_create_id')->nullable();
+            $table->unsignedBigInteger('user_create_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('user_create_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('skill_id')->references('id')->on('skills')->cascadeOnDelete();
         });
     }
 

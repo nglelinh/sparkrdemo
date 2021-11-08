@@ -67,7 +67,7 @@ class JobHistorySeeder extends Seeder
                 'availability' => '1',
             ],
             [
-                'personal_profile_id' => '4',
+                'personal_profile_id' => '1',
                 'title' => 'Title1',
                 'company_name' => 'Company Name1',
                 'start_date' => Carbon::yesterday(),
@@ -77,7 +77,7 @@ class JobHistorySeeder extends Seeder
                 'availability' => '1',
             ],
             [
-                'personal_profile_id' => '4',
+                'personal_profile_id' => '1',
                 'title' => 'Title2',
                 'company_name' => 'Company Name2',
                 'start_date' => Carbon::yesterday(),
@@ -87,7 +87,7 @@ class JobHistorySeeder extends Seeder
                 'availability' => '1',
             ],
             [
-                'personal_profile_id' => '4',
+                'personal_profile_id' => '1',
                 'title' => 'Title3',
                 'company_name' => 'Company Name3',
                 'start_date' => Carbon::yesterday(),
