@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Sparkr\Port\Primary\WebApi\Controllers\Api\AccountController;
-use Sparkr\Port\Primary\WebApi\Controllers\Api\PersonalController;
+use Sparkr\Port\Primary\WebApi\Controllers\Api\FollowController;
+use Sparkr\Port\Primary\WebApi\Controllers\Api\SparkController;
+use Sparkr\Port\Primary\WebApi\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +21,20 @@ Route::group([
                  'namespace' => 'Sparkr\Port\Primary\WebApi\Controllers\Api'
              ], function () {
     // Personal list view
-    Route::prefix('personal')->group(function () {
-        Route::get('/', [PersonalController::class, 'personalProfileList']);
-        Route::get('/basic-info/{userId}', [PersonalController::class, 'basicPersonalInfo']);
-        Route::get('/search', [PersonalController::class, 'personalProfileListSearch']);
+    Route::prefix('user')->group(function () {
+        Route::get('/', [UserController::class, 'userList']);
+        Route::get('/basic-info/{userId}', [UserController::class, 'basicUserInfo']);
+        Route::get('/search', [UserController::class, 'userSearch']);
+        Route::get('/detail/{userId}', [UserController::class, 'userDetail']);
     });
+    // Spark
+    Route::prefix('spark')->group(function () {
+        Route::post('/give-spark', [SparkController::class, 'giveSpark']);
+        Route::post('/add-skill', [SparkController::class, 'addSkill']);
+    });
+    // Follow
+    Route::post('/follow', [FollowController::class, 'follow']);
+    Route::post('/unfollow', [FollowController::class, 'unfollow']);
 
     //    api/ping
     Route::get('ping', function () {

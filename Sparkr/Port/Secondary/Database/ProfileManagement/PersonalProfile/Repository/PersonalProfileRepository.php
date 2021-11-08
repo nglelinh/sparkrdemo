@@ -5,6 +5,7 @@ namespace Sparkr\Port\Secondary\Database\ProfileManagement\PersonalProfile\Repos
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use JetBrains\PhpStorm\NoReturn;
 use Sparkr\Domain\ProfileManagement\PersonalProfile\Interfaces\PersonalProfileRepositoryInterface;
 use Sparkr\Domain\ProfileManagement\PersonalProfile\Models\PersonalProfile;
 use Sparkr\Port\Secondary\Database\Base\EloquentBaseRepository;
@@ -37,7 +38,7 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
 
     public function getRecommendPersonalProfile(): Collection
     {
-        $query = $this->model->with('user')
+        $query = $this->createQuery()
             ->limit(self::RECOMMENDED_LIST_LIMIT)->get()->sortByDesc('user.spark_count');
 
         return $this->transformCollection($query);
@@ -45,7 +46,7 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
 
     public function getPersonalProfileList(): Collection
     {
-        $query = $this->model->with('user')
+        $query = $this->createQuery()
             ->limit(self::LIST_LIMIT)->get();
 
         return $this->transformCollection($query);
@@ -53,7 +54,7 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
 
     public function getSpecifiedPersonalProfile(array $params): Collection
     {
-        $query = $this->modelDAO->newModelQuery()->with('user');
+        $query = $this->createQuery();
         if (!empty($params['keyword'])) {
             $query = $query->whereHas('user', function ($query) use ($params) {
                 $query->where('name', 'LIKE', '%'.$params['keyword'].'%')
@@ -81,10 +82,10 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
 
         if (!empty($params['sparkr'])) {
             $query = $query->select('personal_profiles.*')
-                ->join('spark_skill', 'spark_skill.personal_profile_id', '=', 'personal_profiles.id')
-                ->join('skills', 'skills.id', '=', 'spark_skill.skill_id')
+                ->join('spark', 'spark.personal_profile_id', '=', 'personal_profiles.id')
+                ->join('skills', 'skills.id', '=', 'spark.skill_id')
                 ->where('skills.name', 'LIKE', '%'.$params['sparkr'].'%')
-                ->orderBy('spark_skill.spark_skill_count');
+                ->orderBy('spark.spark_count');
         }
 
         $eloquentModelCollection = $query->get();
@@ -108,13 +109,28 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
      */
     public function getByUserId(int $id): PersonalProfile
     {
-        $query = $this->createQuery()->with('user')->where('user_id', $id)->first();
+        $query = $this->createQuery()->where('user_id', $id)->first();
         if ($query) {
             return $query->toDomainEntity();
         }
         throw new \Exception(__('admin_messages.personal_profile_not_found'));
 
     }
+
+    /**
+     * @throws \Exception
+     */
+    public function getDetailByUserId(int $id): PersonalProfile
+    {
+        $query = $this->createQuery()->with('user.socialLinks')
+            ->where('user_id', $id)->first();
+        if ($query) {
+            return $query->toDomainEntity();
+        }
+        throw new \Exception(__('admin_messages.personal_profile_not_found'));
+
+    }
+
 
     public function save(PersonalProfile $personalProfile): PersonalProfile
     {

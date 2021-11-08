@@ -62,7 +62,7 @@ class AdminUserService
                 'location' => $user->getLocation()?->getName(),
                 'spark_count' => $user->getSparkCount(),
                 'following_count' => $user->getFollowingCount(),
-                'followed_count' => $user->getFollowedCount(),
+                'followed_count' => $user->getFollowerCount(),
                 'last_login' => $user->getLastLogin(),
                 'status' => $user->getStatus(),
             ];
@@ -84,7 +84,7 @@ class AdminUserService
         $userId = $this->userRepository->save($user)->getId();
 
         if ($param['user_type']==UserType::Personal){
-            $personalProfile = new PersonalProfile($userId, $param['desired_position']);
+            $personalProfile = new User($userId, $param['desired_position']);
             $this->personalProfileRepository->save($personalProfile);
         }else{
             $companyProfile = new CompanyProfile($userId, $param['category']);

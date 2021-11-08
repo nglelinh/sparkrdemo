@@ -11,17 +11,17 @@ class SparkSkillDetail extends BaseDomainModel
 {
     private int $sparkSkillId;
 
-    private int $companyProfileId;
+    private int $sparkFromUserId;
 
     /**
      * SparkSkillDetail constructor.
      * @param  int  $sparkSkillId
-     * @param  int  $companyProfileId
+     * @param  int  $sparkFromUserId
      */
-    public function __construct(int $sparkSkillId, int $companyProfileId)
+    public function __construct(int $sparkSkillId, int $sparkFromUserId)
     {
         $this->sparkSkillId = $sparkSkillId;
-        $this->companyProfileId = $companyProfileId;
+        $this->sparkFromUserId = $sparkFromUserId;
     }
 
     /**
@@ -43,17 +43,17 @@ class SparkSkillDetail extends BaseDomainModel
     /**
      * @return int
      */
-    public function getCompanyProfileId(): int
+    public function getSparkFromUserId(): int
     {
-        return $this->companyProfileId;
+        return $this->sparkFromUserId;
     }
 
     /**
-     * @param  int  $companyProfileId
+     * @param  int  $sparkFromUserId
      */
-    public function setCompanyProfileId(int $companyProfileId): void
+    public function setSparkFromUserId(int $sparkFromUserId): void
     {
-        $this->companyProfileId = $companyProfileId;
+        $this->sparkFromUserId = $sparkFromUserId;
     }
 
 

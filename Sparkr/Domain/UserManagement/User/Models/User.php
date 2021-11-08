@@ -3,6 +3,7 @@
 namespace Sparkr\Domain\UserManagement\User\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Sparkr\Domain\Base\BaseDomainModel;
 use Sparkr\Domain\MasterDataManagement\Location\Models\Location;
 use Sparkr\Domain\UserManagement\User\Enums\UserStatus;
@@ -29,7 +30,7 @@ class User extends BaseDomainModel
 
     private ?int $followingCount;
 
-    private ?int $followedCount;
+    private ?int $followerCount;
 
     private ?Carbon $lastLogin;
 
@@ -38,6 +39,12 @@ class User extends BaseDomainModel
     private ?int $status;
 
     private ?Location $location;
+
+    private Collection $socialLinks;
+
+//    private Collection $sparkSkills;
+
+    private ?string $description;
 
     /**
      * User constructor.
@@ -53,6 +60,7 @@ class User extends BaseDomainModel
      * @param  Carbon|null  $lastLogin
      * @param  string|null  $image
      * @param  int|null  $status
+     * @param  string|null  $description
      */
     public function __construct(
         string $email,
@@ -66,8 +74,9 @@ class User extends BaseDomainModel
         ?int $followedCount=0,
         ?Carbon $lastLogin=null,
         ?string $image=null,
-        ?int $status=UserStatus::Active
-    ) {
+        ?int $status=UserStatus::Active,
+        ?string $description=null
+) {
         $this->setEmail($email);
         $this->setPassword($password);
         $this->setName($name);
@@ -76,10 +85,11 @@ class User extends BaseDomainModel
         $this->setLocationId($locationId);
         $this->setSparkCount($sparkCount);
         $this->setFollowingCount($followingCount);
-        $this->setFollowedCount($followedCount);
+        $this->setFollowerCount($followedCount);
         $this->setLastLogin($lastLogin);
         $this->setImage($image);
         $this->setStatus($status);
+        $this->setDescription($description);
     }
 
 
@@ -198,17 +208,17 @@ class User extends BaseDomainModel
     /**
      * @return int|null
      */
-    public function getFollowedCount(): ?int
+    public function getFollowerCount(): ?int
     {
-        return $this->followedCount;
+        return $this->followerCount;
     }
 
     /**
-     * @param  int|null  $followedCount
+     * @param  int|null  $followerCount
      */
-    public function setFollowedCount(?int $followedCount): void
+    public function setFollowerCount(?int $followerCount): void
     {
-        $this->followedCount = $followedCount;
+        $this->followerCount = $followerCount;
     }
 
     /**
@@ -294,6 +304,73 @@ class User extends BaseDomainModel
     public function setLocation(?Location $location): void
     {
         $this->location = $location;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getSocialLinks(): Collection
+    {
+        return $this->socialLinks;
+    }
+
+    /**
+     * @param  Collection  $socialLinks
+     */
+    public function setSocialLinks(Collection $socialLinks): void
+    {
+        $this->socialLinks = $socialLinks;
+    }
+
+//    /**
+//     * @return Collection
+//     */
+//    public function getSparkSkills(): Collection
+//    {
+//        return $this->sparkSkills;
+//    }
+//
+//    /**
+//     * @param  Collection  $sparkSkills
+//     */
+//    public function setSparkSkills(Collection $sparkSkills): void
+//    {
+//        $this->sparkSkills = $sparkSkills;
+//    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param  string|null  $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function addOneFollower(): void
+    {
+        $this->followerCount++;
+    }
+
+    public function addOneFollowing(): void
+    {
+        $this->followingCount++;
+    }
+    public function subtractOneFollower(): void
+    {
+        $this->followerCount--;
+    }
+
+    public function subtractOneFollowing(): void
+    {
+        $this->followingCount--;
     }
 
 }

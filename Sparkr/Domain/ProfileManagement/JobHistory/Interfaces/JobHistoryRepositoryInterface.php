@@ -10,11 +10,11 @@ interface JobHistoryRepositoryInterface
 {
     /**
      */
-    public function getShortJobHistoryByUserId(int $id): Collection;
+    public function getShortJobHistoryByPersonalProfileId(int $id): Collection;
 
     /**
      */
-    public function getAllJobHistoryByUserId(int $id): Collection;
+    public function getAllJobHistoryByPersonalProfileId(int $id): Collection;
 
     /**
      */

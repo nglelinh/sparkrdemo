@@ -8,6 +8,7 @@ use Sparkr\Domain\JobManagement\JobApplyActivity\Interfaces\JobApplyActivityRepo
 use Sparkr\Domain\JobManagement\JobInterestedActivity\Interfaces\JobInterestedActivityRepositoryInterface;
 use Sparkr\Domain\MasterDataManagement\Category\Interfaces\CategoryRepositoryInterface;
 use Sparkr\Domain\MasterDataManagement\JobType\Interfaces\JobTypeRepositoryInterface;
+use Sparkr\Domain\MasterDataManagement\Skill\Interfaces\SkillRepositoryInterface;
 use Sparkr\Domain\NotificationManagement\Notification\Interfaces\NotificationRepositoryInterface;
 use Sparkr\Domain\NotificationManagement\UserNotification\Interfaces\UserNotificationRepositoryInterface;
 use Sparkr\Domain\ProfileManagement\CompanyProfile\Interfaces\CompanyProfileRepositoryInterface;
@@ -15,15 +16,13 @@ use Sparkr\Domain\ProfileManagement\JobHistory\Interfaces\JobHistoryRepositoryIn
 use Sparkr\Domain\ProfileManagement\PersonalProfile\Interfaces\PersonalProfileRepositoryInterface;
 use Sparkr\Domain\SparkManagement\SparkSkill\Interfaces\SparkSkillDetailRepositoryInterface;
 use Sparkr\Domain\SparkManagement\SparkSkill\Interfaces\SparkSkillRepositoryInterface;
-use Sparkr\Domain\SparkManagement\SparkTrait\Interfaces\SparkTraitDetailRepositoryInterface;
-use Sparkr\Domain\SparkManagement\SparkTrait\Interfaces\SparkTraitRepositoryInterface;
 use Sparkr\Domain\UserManagement\UserFollowing\Interfaces\UserFollowingRepositoryInterface;
 use Sparkr\Domain\UserManagement\UserSocialLink\Interfaces\UserSocialLinkRepositoryInterface;
 use Sparkr\Port\Secondary\Database\JobManagement\Job\Repository\JobRepository;
 use Sparkr\Port\Secondary\Database\JobManagement\JobApplyActivity\Repository\JobApplyActivityRepository;
 use Sparkr\Port\Secondary\Database\JobManagement\JobInterestedActivity\Repository\JobInterestedActivityRepository;
 use Sparkr\Port\Secondary\Database\MasterDataManagement\Category\Repository\CategoryRepository;
-use Sparkr\Port\Secondary\Database\MasterDataManagement\JobType\Repository\SkillRepository;
+use Sparkr\Port\Secondary\Database\MasterDataManagement\Skill\Repository\SkillRepository;
 use Sparkr\Port\Secondary\Database\NotificationManagement\Notification\Repository\NotificationRepository;
 use Sparkr\Port\Secondary\Database\NotificationManagement\UserNotification\Repository\UserNotificationRepository;
 use Sparkr\Port\Secondary\Database\ProfileManagement\CompanyProfile\Repository\CompanyProfileRepository;
@@ -31,8 +30,6 @@ use Sparkr\Port\Secondary\Database\ProfileManagement\JobHistory\Repository\JobHi
 use Sparkr\Port\Secondary\Database\ProfileManagement\PersonalProfile\Repository\PersonalProfileRepository;
 use Sparkr\Port\Secondary\Database\SparkManagement\SparkSkill\Repository\SparkSkillDetailRepository;
 use Sparkr\Port\Secondary\Database\SparkManagement\SparkSkill\Repository\SparkSkillRepository;
-use Sparkr\Port\Secondary\Database\SparkManagement\SparkTrait\Repository\SparkTraitDetailRepository;
-use Sparkr\Port\Secondary\Database\SparkManagement\SparkTrait\Repository\SparkTraitRepository;
 use Sparkr\Port\Secondary\Database\UserManagement\User\Repository\UserRepository;
 use Illuminate\Support\ServiceProvider;
 use Sparkr\Domain\UserManagement\User\Interfaces\UserRepositoryInterface;
@@ -65,8 +62,7 @@ class UserServiceProvider extends ServiceProvider
         $this->app->bind(PersonalProfileRepositoryInterface::class,PersonalProfileRepository::class);
         $this->app->bind(SparkSkillDetailRepositoryInterface::class,SparkSkillDetailRepository::class);
         $this->app->bind(SparkSkillRepositoryInterface::class,SparkSkillRepository::class);
-        $this->app->bind(SparkTraitDetailRepositoryInterface::class,SparkTraitDetailRepository::class);
-        $this->app->bind(SparkTraitRepositoryInterface::class,SparkTraitRepository::class);
+        $this->app->bind(SkillRepositoryInterface::class,SkillRepository::class);
         //        $this->app->bind(JobTypeRepositoryInterface,);
         //        $this->app->bind(LocationRepositoryInterface,);
 

@@ -22,16 +22,17 @@ class JobHistoryRepository extends EloquentBaseRepository implements JobHistoryR
         parent::__construct($model);
     }
 
-    public function getShortJobHistoryByUserId(int $userId): Collection
+    public function getShortJobHistoryByPersonalProfileId(int $id): Collection
     {
         return $this->transformCollection($this->createQuery()
-            ->where('personal_profile_id', $userId)
+            ->where('personal_profile_id', $id)
             ->limit(self::DEFAULT_SHORT_LIMIT)->get());
     }
 
-    public function getAllJobHistoryByUserId(int $userId): Collection
+    public function getAllJobHistoryByPersonalProfileId(int $id): Collection
     {
-        return $this->transformCollection($this->createQuery()->where('personal_profile_id', $userId)->get());
+        return $this->transformCollection($this->createQuery()
+            ->where('personal_profile_id', $id)->get());
     }
 
     public function save(JobHistory $jobHistory)

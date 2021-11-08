@@ -37,5 +37,6 @@ interface PersonalProfileRepositoryInterface
      */
     public function delete(int $id);
 
+    public function getDetailByUserId(int $id): PersonalProfile;
 
 }

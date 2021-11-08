@@ -17,6 +17,15 @@ class PersonalProfile extends BaseModel
      */
     protected $table = 'personal_profiles';
 
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        'user'
+    ];
+
     public function toDomainEntity(): PersonalProfileDomainModel
     {
         $personalProfile = new PersonalProfileDomainModel(
@@ -31,9 +40,8 @@ class PersonalProfile extends BaseModel
         );
         $personalProfile->setId($this->getKey());
 
-        if ($this->relationLoaded('user')) {
-            $personalProfile->setUser($this->user?->toDomainEntity());
-        }
+        $personalProfile->setUser($this->user->toDomainEntity());
+
         if ($this->relationLoaded('jobType')) {
             $personalProfile->setJobType($this->jobType?->toDomainEntity());
         }

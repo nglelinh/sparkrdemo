@@ -40,6 +40,14 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
         'updated_at'
     ];
 
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+    ];
+
     public function toDomainEntity(): UserDomainModel
     {
         $user = new UserDomainModel(
@@ -55,13 +63,23 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
             Carbon::make($this->last_login),
             $this->image,
             $this->status,
+            $this->description,
         );
         $user->setId($this->getKey());
 
         if ($this->relationLoaded('location')) {
             $user->setLocation($this->location?->toDomainEntity());
         }
-
+        if ($this->relationLoaded('socialLinks')) {
+            $user->setSocialLinks($this->socialLinks->map(function ($socialLinks) {
+                return $socialLinks->toDomainEntity();
+            }));
+        }
+        if ($this->relationLoaded('sparkSkills')) {
+            $user->setSparkSkills($this->sparkSkills->map(function ($sparkSkills) {
+                return $sparkSkills->toDomainEntity();
+            }));
+        }
         return $user;
     }
 
@@ -79,10 +97,11 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
         $this->location_id = $user->getLocationId();
         $this->spark_count = $user->getSparkCount();
         $this->following_count = $user->getFollowingCount();
-        $this->followed_count = $user->getFollowedCount();
+        $this->followed_count = $user->getFollowerCount();
         $this->last_login = $user->getLastLogin();
         $this->image = $user->getImage();
         $this->status = $user->getStatus();
+        $this->description = $user->getDescription();
 
         return $this;
     }

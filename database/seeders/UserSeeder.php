@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Sparkr\Domain\UserManagement\User\Interfaces\UserRepositoryInterface;
-use Sparkr\Port\Secondary\Database\UserManagement\User\ModelDao\User;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder

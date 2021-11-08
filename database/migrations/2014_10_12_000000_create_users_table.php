@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('last_login')->nullable();
             $table->tinyInteger('status')->default(UserStatus::Active)
                 ->comment('1 = Active, 0 = Inactive');
+            $table->timestamp('description')->nullable();
             $table->timestamps();
         });
     }
