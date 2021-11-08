@@ -12,20 +12,20 @@ class UserSocialLink extends BaseDomainModel
 {
     private int $userId;
 
-    private int $socialNetworkId;
+    private int $socialNetwork;
 
     private string $url;
 
     /**
      * UserSocialLink constructor.
      * @param  int  $userId
-     * @param  int  $socialNetworkId
+     * @param  int  $socialNetwork
      * @param  string  $url
      */
-    public function __construct(int $userId, int $socialNetworkId, string $url)
+    public function __construct(int $userId, int $socialNetwork, string $url)
     {
         $this->userId = $userId;
-        $this->socialNetworkId = $socialNetworkId;
+        $this->socialNetwork = $socialNetwork;
         $this->url = $url;
     }
 
@@ -48,17 +48,17 @@ class UserSocialLink extends BaseDomainModel
     /**
      * @return int
      */
-    public function getSocialNetworkId(): int
+    public function getSocialNetwork(): int
     {
-        return $this->socialNetworkId;
+        return $this->socialNetwork;
     }
 
     /**
-     * @param  int  $socialNetworkId
+     * @param  int  $socialNetwork
      */
-    public function setSocialNetworkId(int $socialNetworkId): void
+    public function setSocialNetwork(int $socialNetwork): void
     {
-        $this->socialNetworkId = $socialNetworkId;
+        $this->socialNetwork = $socialNetwork;
     }
 
     /**

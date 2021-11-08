@@ -24,6 +24,9 @@ class CreateJobHistoryTable extends Migration
             $table->unsignedInteger('job_type_id')->nullable();
             $table->tinyInteger('availability')->nullable();
             $table->timestamps();
+
+            $table->foreign('personal_profile_id')->references('id')->on('personal_profiles')->cascadeOnDelete();
+            $table->foreign('job_type_id')->references('id')->on('job_types');
         });
     }
 

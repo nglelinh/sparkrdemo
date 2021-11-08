@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSparkSkillTable extends Migration
+class CreateSparksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,17 @@ class CreateSparkSkillTable extends Migration
      */
     public function up()
     {
-        Schema::create('spark', function (Blueprint $table) {
+        Schema::create('sparks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedInteger('skill_id');
             $table->integer('spark_count')->default(0);
-            $table->integer('user_create_id')->nullable();
+            $table->unsignedBigInteger('user_create_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('user_create_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('skill_id')->references('id')->on('skills')->cascadeOnDelete();
         });
     }
 
@@ -30,6 +34,6 @@ class CreateSparkSkillTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('spark');
+        Schema::dropIfExists('sparks');
     }
 }

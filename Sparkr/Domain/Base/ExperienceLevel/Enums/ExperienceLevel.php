@@ -1,6 +1,6 @@
 <?php
 
-namespace Sparkr\Domain\MasterDataManagement\ExperienceLevel\Enums;
+namespace Sparkr\Domain\Base\ExperienceLevel\Enums;
 
 use BenSampo\Enum\Enum;
 

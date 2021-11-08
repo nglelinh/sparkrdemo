@@ -23,6 +23,9 @@ class CreateJobsTable extends Migration
             $table->text('description');
             $table->tinyInteger('status')->default(Status::Active);
             $table->timestamps();
+
+            $table->foreign('company_profile_id')->references('id')->on('company_profiles')->cascadeOnDelete();
+            $table->foreign('job_type_id')->references('id')->on('job_types');
         });
     }
 

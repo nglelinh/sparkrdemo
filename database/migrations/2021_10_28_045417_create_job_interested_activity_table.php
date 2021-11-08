@@ -13,11 +13,14 @@ class CreateJobInterestedActivityTable extends Migration
      */
     public function up()
     {
-        Schema::create('job_interested_activity', function (Blueprint $table) {
+        Schema::create('job_interested_activities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('job_id');
             $table->unsignedBigInteger('personal_profile_id');
             $table->timestamps();
+
+            $table->foreign('personal_profile_id')->references('id')->on('personal_profiles')->cascadeOnDelete();
+            $table->foreign('job_id')->references('id')->on('jobs')->cascadeOnDelete();
         });
     }
 
@@ -28,6 +31,6 @@ class CreateJobInterestedActivityTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('job_interested_activity');
+        Schema::dropIfExists('job_interested_activities');
     }
 }

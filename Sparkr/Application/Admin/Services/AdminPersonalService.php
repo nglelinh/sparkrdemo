@@ -42,7 +42,7 @@ class AdminPersonalService
      */
     public function index(): array
     {
-        $this->data =  $this->personalProfileRepository->getAllPersonalProfile()->transform(function (User $personalProfile) {
+        $this->data =  $this->personalProfileRepository->getAllPersonalProfile()->transform(function (PersonalProfile $personalProfile) {
             return [
                 'id' => $personalProfile->getId(),
                 'about' => $personalProfile->getAbout(),
@@ -59,7 +59,7 @@ class AdminPersonalService
      */
     public function create(array $param): array
     {
-        $personalProfile = new User($param['user_id']);
+        $personalProfile = new PersonalProfile($param['user_id']);
         $this->personalProfileRepository->save($personalProfile);
 
         return $this->handleApiResponse();

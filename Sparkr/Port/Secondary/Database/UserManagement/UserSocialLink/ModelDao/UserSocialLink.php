@@ -21,7 +21,7 @@ class UserSocialLink extends BaseModel
     {
         $userSocialLink = new UserSocialLinkDomainModel(
             $this->user_id,
-            $this->social_network_id,
+            $this->social_network,
             $this->url,
         );
         $userSocialLink->setId($this->getKey());
@@ -36,7 +36,7 @@ class UserSocialLink extends BaseModel
     protected function fromDomainEntity($userSocialLink)
     {
         $this->user_id = $userSocialLink->getUserId();
-        $this->social_network_id = $userSocialLink->getSocialNetworkId();
+        $this->social_network = $userSocialLink->getSocialNetwork();
         $this->url = $userSocialLink->getUrl();
 
         return $this;

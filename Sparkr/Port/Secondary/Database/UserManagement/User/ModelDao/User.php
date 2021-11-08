@@ -59,7 +59,7 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
             $this->location_id,
             $this->spark_count,
             $this->following_count,
-            $this->followed_count,
+            $this->follower_count,
             Carbon::make($this->last_login),
             $this->image,
             $this->status,
@@ -97,7 +97,7 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
         $this->location_id = $user->getLocationId();
         $this->spark_count = $user->getSparkCount();
         $this->following_count = $user->getFollowingCount();
-        $this->followed_count = $user->getFollowerCount();
+        $this->follower_count = $user->getFollowerCount();
         $this->last_login = $user->getLastLogin();
         $this->image = $user->getImage();
         $this->status = $user->getStatus();

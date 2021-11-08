@@ -1,6 +1,6 @@
 <?php
 
-namespace Sparkr\Domain\MasterDataManagement\SocialNetwork\Enums;
+namespace Sparkr\Domain\Base\SocialNetwork\Enums;
 
 use BenSampo\Enum\Enum;
 

@@ -23,6 +23,9 @@ class CreatePersonalProfilesTable extends Migration
             $table->unsignedInteger('job_type_id')->nullable();
             $table->tinyInteger('availability')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('job_type_id')->references('id')->on('job_types');
         });
     }
 
