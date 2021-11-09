@@ -3,6 +3,7 @@
 namespace Sparkr\Port\Secondary\Database\UserManagement\User\Repository;
 
 
+use Exception;
 use Illuminate\Support\Collection;
 use Sparkr\Domain\UserManagement\User\Interfaces\UserRepositoryInterface;
 use Sparkr\Domain\UserManagement\User\Models\User;
@@ -25,18 +26,19 @@ class UserRepository extends EloquentBaseRepository implements UserRepositoryInt
         parent::__construct($model);
     }
 
+    /**
+     * @return Collection
+     */
     public function getAllUser(): Collection
     {
         $query = $this->model->with([
 //            'location'
         ])->get();
         return $this->transformCollection($query);
-
     }
 
     /**
      * @param int $id
-     * @param array|null $relations
      * @return UserDomainModel|null
      */
     public function getById(int $id): ?UserDomainModel
@@ -45,22 +47,35 @@ class UserRepository extends EloquentBaseRepository implements UserRepositoryInt
 
         $modelDao = $query->first();
 
-        return $modelDao ? $modelDao->toDomainEntity() : null;
+        return $modelDao?->toDomainEntity();
+    }
 
+    /**
+     * @param string $email
+     * @return UserDomainModel|null
+     */
+    public function getByEmail(string $email): ?UserDomainModel
+    {
+        $query = $this->createQuery()->where('email', $email);
+        $modelDao = $query->first();
+        return $modelDao?->toDomainEntity();
     }
 
     /**
      * @param UserDomainModel $user
      * @return UserDomainModel
-     * @throws \Exception
+     * @throws Exception
      */
     public function save(UserDomainModel $user): UserDomainModel
     {
         return $this->createModelDAO($user->getId())->saveData($user);
     }
 
-
-    public function delete(int $id)
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function delete(int $id): mixed
     {
         return $this->createQuery()->where('id', $id)->delete();
     }

@@ -175,12 +175,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        // Bachelor Service Providers
+        // Sparkr Service Providers
         Sparkr\Application\User\Providers\MasterDataServiceProvider::class,
         Sparkr\Application\User\Providers\UserServiceProvider::class,
         Sparkr\Application\Admin\Providers\AdminServiceProvider::class,
+        Sparkr\Application\User\Providers\AuthServiceProvider::class,
 
-        // Bachelor Event Service Providers
+        // Sparkr Event Service Providers
         Sparkr\Application\Admin\Providers\EventServiceProvider::class,
 
         // Passport

@@ -2,6 +2,7 @@
 
 namespace Sparkr\Domain\Auth\Login\Services;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -99,16 +100,21 @@ class LoginService
 		if (!Auth::attempt($credentials)) {
 			return $this->handleApiResponse('error', 'Unauthorized', [], 401);
 		}
-		$this->tokenService->revokeToken();
-		$oClient = OClient::where('password_client', 1)->first();
-		$response = Http::asForm()->post(url('/oauth/token'), [
-			'grant_type' => 'password',
-			'client_id' => $oClient->id,
-			'client_secret' => $oClient->secret,
-			'username' => $param['email'],
-			'password' => $param['password'],
-			'scope' => '*',
-		]);
+
+		try {
+			$this->tokenService->revokeToken();
+			$oClient = OClient::where('password_client', 1)->first();
+			$response = Http::asForm()->post(url('/oauth/token'), [
+				'grant_type' => 'password',
+				'client_id' => $oClient->id,
+				'client_secret' => $oClient->secret,
+				'username' => $param['email'],
+				'password' => $param['password'],
+				'scope' => '*',
+			]);
+		} catch (Exception $e) {
+			return $this->handleApiResponse('error', '', [], 500);
+		}
 
 		return $this->tokenService->tokenOutput($response->object());
 	}
