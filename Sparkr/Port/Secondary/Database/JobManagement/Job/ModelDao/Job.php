@@ -25,6 +25,8 @@ class Job extends BaseModel
             $this->job_type_id,
             $this->availability,
             $this->status,
+            $this->applied_job_count,
+            $this->interested_job_count,
         );
         $job->setId($this->getKey());
 
@@ -59,6 +61,8 @@ class Job extends BaseModel
         $this->availability = $job->getAvailability();
         $this->description = $job->getDescription();
         $this->status = $job->getStatus();
+        $this->applied_job_count = $job->getAppliedJobCount();
+        $this->interested_job_count = $job->getInterestedJobCount();
 
         return $this;
     }

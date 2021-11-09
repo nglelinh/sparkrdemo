@@ -27,6 +27,10 @@ class Job extends BaseDomainModel
 
     private int $status;
 
+    private int $appliedJobCount;
+
+    private int $interestedJobCount;
+
     private JobType $jobType;
 
     private CompanyProfile $companyProfile;
@@ -218,6 +222,58 @@ class Job extends BaseDomainModel
     public function setJobInterestedActivities(?Collection $jobInterestedActivities): void
     {
         $this->jobInterestedActivities = $jobInterestedActivities;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAppliedJobCount(): int
+    {
+        return $this->appliedJobCount;
+    }
+
+    /**
+     * @param  int  $appliedJobCount
+     */
+    public function setAppliedJobCount(int $appliedJobCount): void
+    {
+        $this->appliedJobCount = $appliedJobCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInterestedJobCount(): int
+    {
+        return $this->interestedJobCount;
+    }
+
+    /**
+     * @param  int  $interestedJobCount
+     */
+    public function setInterestedJobCount(int $interestedJobCount): void
+    {
+        $this->interestedJobCount = $interestedJobCount;
+    }
+
+    public function addOneAppliedJobCount(): void
+    {
+        $this->appliedJobCount++;
+    }
+
+    public function subtractOneAppliedJobCount(): void
+    {
+        $this->appliedJobCount--;
+    }
+
+    public function addOneInterestedJobCount(): void
+    {
+        $this->interestedJobCount++;
+    }
+
+    public function subtractOneInterestedJobCount(): void
+    {
+        $this->interestedJobCount--;
     }
 
 }
