@@ -2,7 +2,10 @@
 
 namespace Sparkr\Domain\JobManagement\Job\Models;
 
+use Illuminate\Support\Collection;
 use Sparkr\Domain\Base\BaseDomainModel;
+use Sparkr\Domain\JobManagement\JobApplyActivity\Models\JobApplyActivity;
+use Sparkr\Domain\JobManagement\JobInterestedActivity\Models\JobInterestedActivity;
 use Sparkr\Domain\MasterDataManagement\JobType\Models\JobType;
 use Sparkr\Domain\ProfileManagement\CompanyProfile\Models\CompanyProfile;
 use Sparkr\Utility\Enums\Status;
@@ -27,6 +30,8 @@ class Job extends BaseDomainModel
     private JobType $jobType;
 
     private CompanyProfile $companyProfile;
+    private ?Collection $jobApplyActivities;
+    private ?Collection $jobInterestedActivities;
 
 
 
@@ -183,5 +188,36 @@ class Job extends BaseDomainModel
         $this->companyProfile = $companyProfile;
     }
 
+    /**
+     * @return Collection|null
+     */
+    public function getJobApplyActivities(): ?Collection
+    {
+        return $this->jobApplyActivities;
+    }
+
+    /**
+     * @param  Collection|null  $jobApplyActivities
+     */
+    public function setJobApplyActivities(?Collection $jobApplyActivities): void
+    {
+        $this->jobApplyActivities = $jobApplyActivities;
+    }
+
+    /**
+     * @return Collection|null
+     */
+    public function getJobInterestedActivities(): ?Collection
+    {
+        return $this->jobInterestedActivities;
+    }
+
+    /**
+     * @param  Collection|null  $jobInterestedActivities
+     */
+    public function setJobInterestedActivities(?Collection $jobInterestedActivities): void
+    {
+        $this->jobInterestedActivities = $jobInterestedActivities;
+    }
 
 }

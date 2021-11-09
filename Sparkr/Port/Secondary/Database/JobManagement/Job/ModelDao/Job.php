@@ -34,6 +34,16 @@ class Job extends BaseModel
         if ($this->relationLoaded('companyProfile')) {
             $job->setCompanyProfile($this->companyProfile->toDomainEntity());
         }
+        if ($this->relationLoaded('jobApplyActivities')) {
+            $job->setJobApplyActivities($this->jobApplyActivities?->map(function ($job) {
+                return $job->toDomainEntity();
+            }));
+        }
+        if ($this->relationLoaded('jobInterestedActivities')) {
+            $job->setJobInterestedActivities($this->jobInterestedActivities?->map(function ($job) {
+                return $job->toDomainEntity();
+            }));
+        }
         return $job;
     }
 

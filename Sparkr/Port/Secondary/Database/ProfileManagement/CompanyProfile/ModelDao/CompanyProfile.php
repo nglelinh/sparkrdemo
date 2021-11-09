@@ -4,9 +4,7 @@ namespace Sparkr\Port\Secondary\Database\ProfileManagement\CompanyProfile\ModelD
 
 use Sparkr\Domain\ProfileManagement\CompanyProfile\Models\CompanyProfile as CompanyProfileDomainModel;
 use Sparkr\Port\Secondary\Database\Base\BaseModel;
-use Sparkr\Port\Secondary\Database\MasterDataManagement\Category\ModelDao\Category;
 use Sparkr\Port\Secondary\Database\ProfileManagement\CompanyProfile\Traits\CompanyProfileRelationshipTrait;
-use Sparkr\Port\Secondary\Database\UserManagement\User\ModelDao\User;
 
 class CompanyProfile extends BaseModel
 {
@@ -17,6 +15,15 @@ class CompanyProfile extends BaseModel
      * @var string
      */
     protected $table = 'company_profiles';
+
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        'user', 'category'
+    ];
 
     public function toDomainEntity(): CompanyProfileDomainModel
     {
@@ -29,12 +36,8 @@ class CompanyProfile extends BaseModel
         );
         $companyProfile->setId($this->getKey());
 
-        if ($this->relationLoaded('user')) {
-            $companyProfile->setUser($this->user->toDomainEntity());
-        }
-        if ($this->relationLoaded('category')) {
-            $companyProfile->setCategory($this->category->toDomainEntity());
-        }
+        $companyProfile->setUser($this->user->toDomainEntity());
+        $companyProfile->setCategory($this->category->toDomainEntity());
         return $companyProfile;
     }
 

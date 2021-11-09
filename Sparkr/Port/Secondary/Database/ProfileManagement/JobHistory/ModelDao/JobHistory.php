@@ -46,7 +46,7 @@ class JobHistory extends BaseModel
         $this->end_date = $jobHistory->getEndDate();
         $this->description = $jobHistory->getDescription();
         $this->job_type_id = $jobHistory->getJobTypeId();
-        $this->availability = $jobHistory->getAvailabilityId();
+        $this->availability = $jobHistory->getAvailability();
 
         return $this;
     }
