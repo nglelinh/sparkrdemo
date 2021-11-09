@@ -10,6 +10,7 @@ use Sparkr\Domain\ProfileManagement\PersonalProfile\Models\PersonalProfile;
 use Sparkr\Domain\SparkManagement\SparkSkill\Interfaces\SparkSkillRepositoryInterface;
 use Sparkr\Domain\SparkManagement\SparkSkill\Models\SparkSkill;
 use Sparkr\Domain\SparkManagement\SparkSkill\Models\SparkSkillDetail;
+use Sparkr\Domain\UserManagement\User\Enums\PersonalFilter;
 use Sparkr\Domain\UserManagement\User\Interfaces\UserRepositoryInterface;
 use Sparkr\Domain\UserManagement\UserFollowing\Interfaces\UserFollowingRepositoryInterface;
 use Sparkr\Domain\UserManagement\UserFollowing\Services\UserFollowerDomainService;
@@ -67,10 +68,10 @@ class PersonalProfileService
         $search['sparkr'] = $params['sparkr'] ?? "";
         $search['keyword'] = $params['keyword'] ?? "";
         $search['filters'] = [
-            'experience_level' =>  $params['experience_level'] ?? "",
-            'job_type_id' => $params['job_type'] ?? "",
-            'location_id' => $params['location'] ?? "",
-            'availability' => $params['availability'] ?? "",
+            PersonalFilter::ExperienceLevel =>  $params['experience_level'] ?? "",
+            PersonalFilter::JobTypeId => $params['job_type'] ?? "",
+            PersonalFilter::LocationId => $params['location'] ?? "",
+            PersonalFilter::Availability => $params['availability'] ?? "",
         ];
         $this->data[] = $this->personalProfileRepository->getSpecifiedPersonalProfile($search)
             ->transform(function (PersonalProfile $personalProfile) {
@@ -90,7 +91,7 @@ class PersonalProfileService
      */
     public function getPersonalProfile(): array
     {
-        $this->data['recommendedList'] = $this->personalProfileRepository->getRecommendPersonalProfile()
+        $this->data['recommendedList'] = $this->personalProfileRepository->getRecommendPersonalProfileList()
             ->transform(function (PersonalProfile $personalProfile) {
                 return [
                     'id' => $personalProfile->getUserId(),
@@ -101,7 +102,7 @@ class PersonalProfileService
                 ];
             })->toArray();
 
-        $this->data['list'] = $this->personalProfileRepository->getRecommendPersonalProfile()
+        $this->data['list'] = $this->personalProfileRepository->getPersonalProfileList()
             ->transform(function (PersonalProfile $personalProfile) {
                 return [
                     'id' => $personalProfile->getUserId(),
@@ -158,14 +159,12 @@ class PersonalProfileService
 
         $sparkSkills = $this->sparkSkillRepository->getSparkSkillByUserId($userId);
         $skillCount = $sparkSkills->count();
-        $sparkSkillsArray = $sparkSkills->transform(function (SparkSkill $sparkSkill, $authUserId) {
+        $sparkSkillsArray = $sparkSkills->transform(function (SparkSkill $sparkSkill) { //use ($authUserId)
             return [
                 'spark_id' => $sparkSkill->getId(),
                 'skill_name' => $sparkSkill->getSkill()->getName(),
                 'spark_count' => $sparkSkill->getSparkSkillCount(),
-                'is_sparked' => $sparkSkill->getSparkDetails()->each(function (SparkSkillDetail $detail, $authUserId){
-                    return $detail->getSparkFromUserId() === $authUserId;
-                })
+//                'is_sparked' => $this->isSparked($sparkSkill, $authUserId)
             ];
         })->toArray();
 
@@ -175,7 +174,7 @@ class PersonalProfileService
                 'company' => $jobHistory->getCompanyName(),
                 'start_year' => $jobHistory->getStartDate()->format('Y'),
                 'end_year' => $jobHistory->getEndDate()->format('Y'),
-                'availability' => $jobHistory->getAvailabilityId(),
+                'availability' => $jobHistory->getAvailability(),
                 'description' => $jobHistory->getDescription(),
             ];
         })->toArray();
@@ -196,6 +195,17 @@ class PersonalProfileService
 //            'following' => $following
         ];
         return $this->handleApiResponse();
+    }
+
+    public function isSparked(SparkSkill $sparkSkill, int $authUserId): bool
+    {
+        $details = $sparkSkill->getSparkDetails();
+        foreach ($details as $detail){
+            if ($detail->getSparkFromUserId() === $authUserId){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

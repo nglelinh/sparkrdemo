@@ -14,7 +14,7 @@ interface PersonalProfileRepositoryInterface
 
     /**
      */
-    public function getRecommendPersonalProfile(): Collection;
+    public function getRecommendPersonalProfileList(): Collection;
 
     public function getPersonalProfileList(): Collection;
 

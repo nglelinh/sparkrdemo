@@ -36,7 +36,7 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
         return $this->transformCollection($query);
     }
 
-    public function getRecommendPersonalProfile(): Collection
+    public function getRecommendPersonalProfileList(): Collection
     {
         $query = $this->createQuery()
             ->limit(self::RECOMMENDED_LIST_LIMIT)->get()->sortByDesc('user.spark_count');
@@ -82,10 +82,10 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
 
         if (!empty($params['sparkr'])) {
             $query = $query->select('personal_profiles.*')
-                ->join('spark', 'spark.personal_profile_id', '=', 'personal_profiles.id')
-                ->join('skills', 'skills.id', '=', 'spark.skill_id')
+                ->join('sparks', 'sparks.user_id', '=', 'personal_profiles.user_id')
+                ->join('skills', 'skills.id', '=', 'sparks.skill_id')
                 ->where('skills.name', 'LIKE', '%'.$params['sparkr'].'%')
-                ->orderBy('spark.spark_count');
+                ->orderBy('sparks.spark_count');
         }
 
         $eloquentModelCollection = $query->get();
