@@ -56,24 +56,10 @@ class PasswordResetService
      * @param $token
      * @return JsonResponse
      */
-    public function reset(Request $request, $token): JsonResponse
+    public function submitResetPassword(Request $request, $token): JsonResponse
     {
-        $passwordReset = $this->passwordResetRepository->getByToken($token);
-        if (is_null($passwordReset)) {
-            return response()->json([
-                                        'message' => 'This password reset token is invalid.',
-                                    ], 404);
-        }
-
-        $email = $passwordReset->getEmail();
-        if (Carbon::parse($passwordReset->getUpdateAt())->addMinutes(5)->isPast()) {
-            $this->passwordResetRepository->delete($email);
-
-            return response()->json([
-                                        'message' => 'This password reset token is invalid.',
-                                    ], 422);
-        }
-
+        $checkTokenResult = $this->checkResetPasswordToken($token)->getData();
+        $email = $checkTokenResult->data->email;
         $user = $this->userRepository->getByEmail($email);
         if (is_null($user)) {
             return response()->json([
@@ -87,7 +73,49 @@ class PasswordResetService
         $passwordDelete = $this->passwordResetRepository->delete($email);
 
         return response()->json([
-                                    'success' => $passwordDelete ? "success" : "error",
+                                    'status' => $passwordDelete ? "success" : "error",
+                                    'message' => 'Change password successfully!',
                                 ]);
+    }
+
+    /**
+     * @param $token
+     * @return JsonResponse
+     */
+    public function checkResetPasswordToken($token): JsonResponse
+    {
+        $passwordReset = $this->passwordResetRepository->getByToken($token);
+        if (is_null($passwordReset)) {
+            return response()->json([
+                                        'status' => 'error',
+                                        'message' => 'This password reset token is invalid.',
+                                    ], 404);
+        }
+
+        $email = $passwordReset->getEmail();
+        if (Carbon::parse($passwordReset->getUpdateAt())->addMinutes(30)->isPast()) {
+            $this->passwordResetRepository->delete($email);
+
+            return response()->json([
+                                        'status' => 'error',
+                                        'message' => 'This password reset token is invalid.',
+                                    ], 422);
+        }
+        return response()->json([
+                                    'status' => 'success',
+                                    'message' => 'Valid tokens',
+                                    'data' => [
+                                        'email' => $email
+                                    ],
+                                ]);
+    }
+
+    /**
+     * @param $token
+     * @return JsonResponse
+     */
+    public function resetPassword($token): JsonResponse
+    {
+        return $this->checkResetPasswordToken($token);
     }
 }

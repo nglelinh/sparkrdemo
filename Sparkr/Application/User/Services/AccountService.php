@@ -115,8 +115,17 @@ class AccountService
      * @param $token
      * @return JsonResponse
      */
-    public function reset(Request $request, $token): JsonResponse
+    public function submitResetPassword(Request $request, $token): JsonResponse
     {
-        return $this->passwordResetService->reset($request, $token);
+        return $this->passwordResetService->submitResetPassword($request, $token);
+    }
+
+    /**
+     * @param $token
+     * @return JsonResponse
+     */
+    public function resetPassword($token): JsonResponse
+    {
+        return $this->passwordResetService->resetPassword($token);
     }
 }

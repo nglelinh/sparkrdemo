@@ -26,8 +26,18 @@ class ResetPasswordController extends BaseController
      * @param AccountService $accountService
      * @return JsonResponse
      */
-    public function reset(Request $request, AccountService $accountService): JsonResponse
+    public function submitResetPassword(Request $request, AccountService $accountService): JsonResponse
     {
-        return $accountService->reset($request, $request->token);
+        return $accountService->submitResetPassword($request, $request->token);
+    }
+
+    /**
+     * @param Request $request
+     * @param AccountService $accountService
+     * @return JsonResponse
+     */
+    public function resetPassword(Request $request, AccountService $accountService): JsonResponse
+    {
+        return $accountService->resetPassword($request->token);
     }
 }

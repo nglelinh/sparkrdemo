@@ -44,9 +44,10 @@ Route::group([
 });
 Route::post("/refreshToken/", [AccountController::class, 'refreshToken']);
 
-Route::post('reset-password', [ResetPasswordController::class,'reset'])->name('reset_password');
+Route::post('reset-password', [ResetPasswordController::class,'submitResetPassword']);
+Route::get('reset-password', [ResetPasswordController::class,'resetPassword']);
 
-Route::post('forget-password', [ResetPasswordController::class,'sendMail'])->name('forget-password');
+Route::post('forget-password', [ResetPasswordController::class,'sendMail']);
 
 Route::group([
                  'prefix' => 'auth'
