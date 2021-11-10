@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use JetBrains\PhpStorm\NoReturn;
 use Sparkr\Domain\ProfileManagement\PersonalProfile\Interfaces\PersonalProfileRepositoryInterface;
 use Sparkr\Domain\ProfileManagement\PersonalProfile\Models\PersonalProfile;
+use Sparkr\Domain\UserManagement\User\Models\User;
 use Sparkr\Port\Secondary\Database\Base\EloquentBaseRepository;
 use Sparkr\Port\Secondary\Database\ProfileManagement\PersonalProfile\ModelDao\PersonalProfile as PersonalProfileDao;
 
@@ -15,6 +16,7 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
 {
     const LIST_LIMIT = 50;
     const RECOMMENDED_LIST_LIMIT = 20;
+    const SIMILAR_LIST_LIMIT = 3;
 
     /**
      * ProfileRepository constructor.
@@ -140,7 +142,18 @@ class PersonalProfileRepository extends EloquentBaseRepository implements Person
     public function delete(int $id)
     {
         return $this->createQuery()->where('id', $id)->delete();
-
-
     }
+
+    public function getSimilarPersonalProfileList(PersonalProfile $personalProfile): Collection
+    {
+        $query = $this->createQuery()
+            ->limit(self::SIMILAR_LIST_LIMIT)
+            ->whereHas('user', function ($query) use ($personalProfile) {
+                $query->where('experience_level', 'LIKE', '%'.$personalProfile->getUser()->getExperienceLevel().'%')
+                    ->orWhere('desired_position', 'LIKE', '%'.$personalProfile->getDesiredPosition().'%');
+            });
+
+        return $this->transformCollection($query->get());
+    }
+
 }

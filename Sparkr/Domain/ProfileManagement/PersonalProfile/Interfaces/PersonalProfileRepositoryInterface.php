@@ -39,4 +39,6 @@ interface PersonalProfileRepositoryInterface
 
     public function getDetailByUserId(int $id): PersonalProfile;
 
+    public function getSimilarPersonalProfileList(PersonalProfile $personalProfile): Collection;
+
 }

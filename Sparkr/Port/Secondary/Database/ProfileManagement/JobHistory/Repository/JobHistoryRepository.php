@@ -32,7 +32,9 @@ class JobHistoryRepository extends EloquentBaseRepository implements JobHistoryR
     public function getAllJobHistoryByPersonalProfileId(int $id): Collection
     {
         return $this->transformCollection($this->createQuery()
-            ->where('personal_profile_id', $id)->get());
+            ->where('personal_profile_id', $id)
+            ->orderBy('start_date')
+            ->get());
     }
 
     public function save(JobHistory $jobHistory)

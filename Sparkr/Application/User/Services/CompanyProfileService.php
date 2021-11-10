@@ -235,6 +235,22 @@ class CompanyProfileService
         return false;
     }
 
+    public function getSimilarCompanyProfileList(int $userId): array
+    {
+        $companyProfile = $this->companyProfileRepository->getDetailByUserId($userId);
+        $this->data[] = $this->companyProfileRepository->getSimilarCompanyProfileList($companyProfile)
+            ->transform(function (CompanyProfile $companyProfile) {
+                $user = $companyProfile->getUser();
+                return [
+                    'id' => $companyProfile->getUserId(),
+                    'name' => $user->getName(),
+                    'location' => $user->getLocation()->getName(),
+                    'image' => $user->getImage(),
+                ];
+            })->toArray();
+        return $this->handleApiResponse();
+    }
+
     /**
      * Format response data
      *

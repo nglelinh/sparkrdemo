@@ -40,4 +40,6 @@ interface CompanyProfileRepositoryInterface
 
     public function getDetailByUserId(int $id): CompanyProfile;
 
+    public function getSimilarCompanyProfileList(CompanyProfile $companyProfile): Collection;
+
 }

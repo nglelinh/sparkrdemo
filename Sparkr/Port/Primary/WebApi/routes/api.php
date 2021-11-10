@@ -27,6 +27,7 @@ Route::group([
         Route::get('/basic-info/{userId}', [UserController::class, 'basicUserInfo']);
         Route::get('/search', [UserController::class, 'userSearch']);
         Route::get('/detail/{userId}', [UserController::class, 'userDetail']);
+        Route::get('/similar/{userId}', [UserController::class, 'similarProfile']);
     });
     // Job
     Route::prefix('job')->group(function () {

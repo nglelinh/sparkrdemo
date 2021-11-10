@@ -208,6 +208,21 @@ class PersonalProfileService
         return false;
     }
 
+    public function getSimilarPersonalProfileList(int $userId): array
+    {
+        $personalProfile = $this->personalProfileRepository->getDetailByUserId($userId);
+        $this->data[] = $this->personalProfileRepository->getSimilarPersonalProfileList($personalProfile)
+            ->transform(function (PersonalProfile $personalProfile) {
+                return [
+                    'id' => $personalProfile->getUserId(),
+                    'name' => $personalProfile->getUser()->getName(),
+                    'current_position' => $personalProfile->getCurrentPosition(),
+                    'image' => $personalProfile->getUser()->getImage(),
+                ];
+            })->toArray();
+        return $this->handleApiResponse();
+    }
+
     /**
      * Format response data
      *

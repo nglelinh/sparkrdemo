@@ -86,4 +86,22 @@ class UserController extends BaseController
         return ApiResponseHandler::jsonResponse($this->status, $this->message, $this->data);
     }
 
+    public function similarProfile(int $id, PersonalProfileService $personalProfileService, CompanyProfileService $companyProfileService): JsonResponse
+    {
+//        $userType = Auth::user()->getDomainEntity()->getUserType();
+        $userType = UserType::Personal;
+        switch ($userType){
+            case UserType::Company:
+                $response = $personalProfileService->getSimilarPersonalProfileList($id);
+                break;
+            case UserType::Personal:
+                $response = $companyProfileService->getSimilarCompanyProfileList($id);
+                break;
+        }
+
+        self::setResponse($response['status'], $response['message'], $response['data']);
+
+        return ApiResponseHandler::jsonResponse($this->status, $this->message, $this->data);
+    }
+
 }
