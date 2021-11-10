@@ -38,15 +38,16 @@ class Job extends BaseDomainModel
     private ?Collection $jobInterestedActivities;
 
 
-
     /**
      * Job constructor.
      * @param  string  $title
      * @param  int  $companyProfileId
+     * @param  string  $description
      * @param  int|null  $jobTypeId
      * @param  int|null  $availabilityId
-     * @param  string  $description
      * @param  int  $status
+     * @param  int  $appliedJobCount
+     * @param  int  $interestedJobCount
      */
     public function __construct(
         string $title,
@@ -54,14 +55,18 @@ class Job extends BaseDomainModel
         string $description,
         ?int $jobTypeId = null,
         ?int $availabilityId = null,
-        int $status = Status::Active
-    ) {
+        int $status = Status::Active,
+        int $appliedJobCount = 0,
+        int $interestedJobCount = 0,
+) {
         $this->title = $title;
         $this->companyProfileId = $companyProfileId;
         $this->jobTypeId = $jobTypeId;
         $this->availability = $availabilityId;
         $this->description = $description;
         $this->status = $status;
+        $this->appliedJobCount = $appliedJobCount;
+        $this->interestedJobCount = $interestedJobCount;
     }
 
     /**

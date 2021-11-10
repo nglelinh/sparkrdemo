@@ -24,11 +24,10 @@ class JobController extends BaseController
 
     public function interestedJob(JobService $jobService, Request $request): JsonResponse
     {
-        $userToId = $request->input('userToId');
-        $userFromId = $request->input('userFromId');
-        $skillName = $request->input('skillName');
+        $jobId = $request->input('jobId');
+        $userId = $request->input('userId');
 
-        $response = $jobService->interestedJob($userToId, $userFromId, $skillName);
+        $response = $jobService->interestedJob($jobId, $userId);
 
         self::setResponse($response['status'], $response['message'], $response['data']);
 

@@ -58,8 +58,9 @@ class JobService
         try {
             $job = $this->jobRepository->getJobById($jobId);
             $job->addOneAppliedJobCount();
-            $jobApplyActivity = new JobApplyActivity($jobId, $userId);
+            $this->jobRepository->save($job);
 
+            $jobApplyActivity = new JobApplyActivity($jobId, $userId);
             $this->jobApplyActivityRepository->save($jobApplyActivity);
             DB::commit();
             return $this->handleApiResponse();
@@ -75,8 +76,9 @@ class JobService
         try {
             $job = $this->jobRepository->getJobById($jobId);
             $job->addOneInterestedJobCount();
-            $jobInterestedActivity = new JobInterestedActivity($jobId, $userId);
+            $this->jobRepository->save($job);
 
+            $jobInterestedActivity = new JobInterestedActivity($jobId, $userId);
             $this->jobInterestedActivityRepository->save($jobInterestedActivity);
             DB::commit();
             return $this->handleApiResponse();
