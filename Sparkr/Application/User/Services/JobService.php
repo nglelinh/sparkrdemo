@@ -57,7 +57,7 @@ class JobService
         DB::beginTransaction();
         try {
             $job = $this->jobRepository->getJobById($jobId);
-            $job->addOneAppliedJobCount();
+            $job->incrementAppliedJobCount();
             $this->jobRepository->save($job);
 
             $jobApplyActivity = new JobApplyActivity($jobId, $userId);
@@ -75,7 +75,7 @@ class JobService
         DB::beginTransaction();
         try {
             $job = $this->jobRepository->getJobById($jobId);
-            $job->addOneInterestedJobCount();
+            $job->incrementInterestedJobCount();
             $this->jobRepository->save($job);
 
             $jobInterestedActivity = new JobInterestedActivity($jobId, $userId);

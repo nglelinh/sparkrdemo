@@ -53,11 +53,11 @@ class FollowService
             $this->userFollowerRepository->save($userFollower);
 
             $user = $this->userRepository->getById($userId);
-            $user->addOneFollower();
+            $user->incrementFollower();
             $this->userRepository->save($user);
 
             $follower = $this->userRepository->getById($followerId);
-            $follower->addOneFollowing();
+            $follower->incrementFollowing();
             $this->userRepository->save($follower);
             DB::commit();
             return $this->handleApiResponse();
@@ -75,10 +75,10 @@ class FollowService
             $this->userFollowerRepository->delete($userFollower->getId());
 
             $user = $userFollower->getUser();
-            $user->subtractOneFollower();
+            $user->decrementFollower();
             $this->userRepository->save($user);
             $follower = $userFollower->getFollower();
-            $follower->subtractOneFollowing();
+            $follower->decrementFollowing();
             $this->userRepository->save($follower);
             DB::commit();
             return $this->handleApiResponse();

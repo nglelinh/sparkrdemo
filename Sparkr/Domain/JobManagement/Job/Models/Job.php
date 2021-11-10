@@ -261,22 +261,22 @@ class Job extends BaseDomainModel
         $this->interestedJobCount = $interestedJobCount;
     }
 
-    public function addOneAppliedJobCount(): void
+    public function incrementAppliedJobCount(): void
     {
         $this->appliedJobCount++;
     }
 
-    public function subtractOneAppliedJobCount(): void
+    public function decrementAppliedJobCount(): void
     {
         $this->appliedJobCount--;
     }
 
-    public function addOneInterestedJobCount(): void
+    public function incrementInterestedJobCount(): void
     {
         $this->interestedJobCount++;
     }
 
-    public function subtractOneInterestedJobCount(): void
+    public function decrementOneInterestedJobCount(): void
     {
         $this->interestedJobCount--;
     }

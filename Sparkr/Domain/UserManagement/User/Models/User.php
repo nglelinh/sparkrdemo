@@ -354,21 +354,21 @@ class User extends BaseDomainModel
         $this->description = $description;
     }
 
-    public function addOneFollower(): void
+    public function incrementFollower(): void
     {
         $this->followerCount++;
     }
 
-    public function addOneFollowing(): void
+    public function incrementFollowing(): void
     {
         $this->followingCount++;
     }
-    public function subtractOneFollower(): void
+    public function decrementFollower(): void
     {
         $this->followerCount--;
     }
 
-    public function subtractOneFollowing(): void
+    public function decrementFollowing(): void
     {
         $this->followingCount--;
     }

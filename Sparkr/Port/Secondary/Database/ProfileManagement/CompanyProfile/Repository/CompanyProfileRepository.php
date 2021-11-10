@@ -14,6 +14,7 @@ class CompanyProfileRepository extends EloquentBaseRepository implements Company
 {
     const LIST_LIMIT = 50;
     const RECOMMENDED_LIST_LIMIT = 20;
+    const SIMILAR_LIST_LIMIT = 3;
 
     /**
      * ProfileRepository constructor.
@@ -135,4 +136,18 @@ class CompanyProfileRepository extends EloquentBaseRepository implements Company
         }
         throw new \Exception(__('admin_messages.company_not_found'));
     }
+
+    public function getSimilarCompanyProfileList(CompanyProfile $companyProfile): Collection
+    {
+        $query = $this->createQuery()
+            ->with('user.location')
+            ->limit(self::SIMILAR_LIST_LIMIT)
+            ->whereHas('user', function ($query) use ($companyProfile) {
+                $query->where('experience_level', 'LIKE', '%'.$companyProfile->getUser()->getExperienceLevel().'%')
+                    ->orWhere('category_id', 'LIKE', '%'.$companyProfile->getCategoryId().'%');
+            });
+
+        return $this->transformCollection($query->get());
+    }
+
 }
