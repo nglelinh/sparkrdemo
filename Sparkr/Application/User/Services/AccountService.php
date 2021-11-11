@@ -55,9 +55,9 @@ class AccountService
 	 * @param array $param
 	 * @return JsonResponse
 	 */
-	public function signup(array $param): JsonResponse
+	public function register(array $param): JsonResponse
 	{
-		$signupResult = $this->loginService->signup($param)->getData();
+		$signupResult = $this->loginService->register($param)->getData();
 		if ($signupResult->status === 'success') {
 			$this->confirmRegistrationService->sendEmailConfirmRegistration($param);
 			return response()->json([

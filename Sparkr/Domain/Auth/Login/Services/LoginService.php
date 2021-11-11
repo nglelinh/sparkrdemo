@@ -40,7 +40,7 @@ class LoginService
 	 * @param array $param
 	 * @return JsonResponse
 	 */
-	public function signup(array $param): JsonResponse
+	public function register(array $param): JsonResponse
 	{
 		$validator = Validator::make($param, [
 			'name' => 'required|string',

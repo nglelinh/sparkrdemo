@@ -60,7 +60,7 @@ Route::group([
                  'prefix' => 'auth'
              ], function () {
     Route::post('login', [AccountController::class, 'login'])->name('login');
-    Route::post('signup', [AccountController::class, 'signup']);
+    Route::post('register', [AccountController::class, 'signup']);
     Route::delete('logout', [AccountController::class, 'logout']);
     Route::group([
                      'middleware' => 'auth:api'

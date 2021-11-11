@@ -14,9 +14,9 @@ class AccountController extends BaseController
      * @param AccountService $accountService
      * @return JsonResponse
      */
-    public function signup(Request $request, AccountService $accountService): JsonResponse
+    public function register(Request $request, AccountService $accountService): JsonResponse
     {
-        return $accountService->signup($request->all());
+        return $accountService->register($request->all());
     }
 
     /**
