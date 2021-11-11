@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Sparkr\Port\Primary\WebApi\Controllers\Api\AccountController;
 use Sparkr\Port\Primary\WebApi\Controllers\Api\FollowController;
+use Sparkr\Port\Primary\WebApi\Controllers\Api\ResetPasswordController;
 use Sparkr\Port\Primary\WebApi\Controllers\Api\SparkController;
 use Sparkr\Port\Primary\WebApi\Controllers\Api\UserController;
 
@@ -42,6 +43,11 @@ Route::group([
     });
 });
 Route::post("/refreshToken/", [AccountController::class, 'refreshToken']);
+
+Route::post('reset-password', [ResetPasswordController::class,'submitResetPassword']);
+Route::get('reset-password', [ResetPasswordController::class,'resetPassword']);
+
+Route::post('forget-password', [ResetPasswordController::class,'sendMail']);
 
 Route::group([
                  'prefix' => 'auth'
