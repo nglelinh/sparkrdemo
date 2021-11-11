@@ -19,5 +19,10 @@ class DatabaseSeeder extends Seeder
         $this->call(JobHistorySeeder::class);
         $this->call(SkillSeeder::class);
         $this->call(SparkSkillSeeder::class);
+        $this->call(LocationSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(CompanyProfileSeeder::class);
+        $this->call(JobSeeder::class);
+
     }
 }

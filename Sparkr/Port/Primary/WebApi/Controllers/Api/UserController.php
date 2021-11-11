@@ -4,7 +4,6 @@ namespace Sparkr\Port\Primary\WebApi\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Sparkr\Application\User\Services\CompanyProfileService;
 use Sparkr\Application\User\Services\PersonalProfileService;
 use Sparkr\Domain\Base\UserType\Enums\UserType;
@@ -17,8 +16,8 @@ class UserController extends BaseController
         PersonalProfileService $personalProfileService, CompanyProfileService $companyProfileService
     ): JsonResponse
     {
-//        $userType = Auth::user()->getDomainEntity()->getUserType();
-        $userType = UserType::Personal;
+        $user = auth('api')->user();
+        $userType = $user->toDomainEntity()->getUserType();
         switch ($userType){
             case UserType::Company:
                 $response = $personalProfileService->getPersonalProfile();
@@ -34,8 +33,8 @@ class UserController extends BaseController
     }
     public function userSearch(Request $request, PersonalProfileService $personalProfileService, CompanyProfileService $companyProfileService): JsonResponse
     {
-//        $userType = Auth::user()->getDomainEntity()->getUserType();
-        $userType = UserType::Personal;
+        $user = auth('api')->user();
+        $userType = $user->toDomainEntity()->getUserType();
         switch ($userType){
             case UserType::Company:
                 $response = $personalProfileService->personalProfileListSearch($request->all());
@@ -52,8 +51,8 @@ class UserController extends BaseController
 
     public function basicUserInfo(int $id, PersonalProfileService $personalProfileService, CompanyProfileService $companyProfileService): JsonResponse
     {
-//        $userType = Auth::user()->getDomainEntity()->getUserType();
-        $userType = UserType::Personal;
+        $user = auth('api')->user();
+        $userType = $user->toDomainEntity()->getUserType();
         switch ($userType){
             case UserType::Company:
                 $response = $personalProfileService->getBasicPersonalInfo($id);
@@ -70,8 +69,8 @@ class UserController extends BaseController
 
     public function userDetail(int $id, PersonalProfileService $personalProfileService, CompanyProfileService $companyProfileService): JsonResponse
     {
-//        $userType = Auth::user()->getDomainEntity()->getUserType();
-        $userType = UserType::Personal;
+        $user = auth('api')->user();
+        $userType = $user->toDomainEntity()->getUserType();
         switch ($userType){
             case UserType::Company:
                 $response = $personalProfileService->getPersonalProfileDetail($id);
@@ -88,8 +87,8 @@ class UserController extends BaseController
 
     public function similarProfile(int $id, PersonalProfileService $personalProfileService, CompanyProfileService $companyProfileService): JsonResponse
     {
-//        $userType = Auth::user()->getDomainEntity()->getUserType();
-        $userType = UserType::Personal;
+        $user = auth('api')->user();
+        $userType = $user->toDomainEntity()->getUserType();
         switch ($userType){
             case UserType::Company:
                 $response = $personalProfileService->getSimilarPersonalProfileList($id);

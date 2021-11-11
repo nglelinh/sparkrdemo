@@ -83,8 +83,7 @@ class CompanyProfileRepository extends EloquentBaseRepository implements Company
         $query = $this->createQuery();
         if (!empty($params['keyword'])) {
             $query = $query->whereHas('user', function ($query) use ($params) {
-                $query->where('name', 'LIKE', '%'.$params['keyword'].'%')
-                    ->orWhere('about', 'LIKE', '%'.$params['keyword'].'%');
+                $query->where('name', 'LIKE', '%'.$params['keyword'].'%');
             });
         }
 

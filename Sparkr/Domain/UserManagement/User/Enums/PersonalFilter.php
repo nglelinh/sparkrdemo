@@ -2,7 +2,7 @@
 
 namespace Sparkr\Domain\UserManagement\User\Enums;
 
-use Sparkr\Utility\Enums\IntEnum;
+use Sparkr\Utility\Enums\StringEnum;
 
 /**
  * @method static static ExperienceLevel()
@@ -10,7 +10,7 @@ use Sparkr\Utility\Enums\IntEnum;
  * @method static static LocationId()
  * @method static static Availability()
  */
-final class PersonalFilter extends IntEnum
+final class PersonalFilter extends StringEnum
 {
     const ExperienceLevel = 'experience_level';
     const JobTypeId = 'job_type_id';

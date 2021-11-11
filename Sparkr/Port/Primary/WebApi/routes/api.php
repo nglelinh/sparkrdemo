@@ -20,8 +20,9 @@ use Sparkr\Port\Primary\WebApi\Controllers\Api\UserController;
 */
 
 Route::group([
-                 'namespace' => 'Sparkr\Port\Primary\WebApi\Controllers\Api'
-             ], function () {
+    'namespace' => 'Sparkr\Port\Primary\WebApi\Controllers\Api',
+    'middleware' => 'auth:api'
+], function () {
     // User list view
     Route::prefix('user')->group(function () {
         Route::get('/', [UserController::class, 'userList']);
