@@ -211,11 +211,11 @@ class User extends BaseDomainModel
     }
 
     /**
-     * @param  Carbon|null  $lastLogin
+     * @param string $lastLogin
      */
-    public function setLastLogin(?Carbon $lastLogin): void
+    public function setLastLogin(string $lastLogin): void
     {
-        $this->lastLogin = $lastLogin;
+        $this->lastLogin = Carbon::createFromTimestamp($lastLogin);
     }
 
     /**
