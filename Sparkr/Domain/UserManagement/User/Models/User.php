@@ -48,50 +48,30 @@ class User extends BaseDomainModel
 
     /**
      * User constructor.
-     * @param  string  $email
-     * @param  string  $password
-     * @param  string|null  $name
-     * @param  int|null  $userType
-     * @param  int|null  $experienceLevel
-     * @param  int|null  $locationId
-     * @param  int|null  $sparkCount
-     * @param  int|null  $followingCount
-     * @param  int|null  $followedCount
-     * @param  Carbon|null  $lastLogin
-     * @param  string|null  $image
-     * @param  int|null  $status
-     * @param  string|null  $description
+     * @param array $param
+     *
      */
-    public function __construct(
-        string $email,
-        string $password,
-        ?string $name =null,
-        ?int $userType=null,
-        ?int $experienceLevel=null,
-        ?int $locationId=null,
-        ?int $sparkCount=0,
-        ?int $followingCount=0,
-        ?int $followedCount=0,
-        ?Carbon $lastLogin=null,
-        ?string $image=null,
-        ?int $status=UserStatus::Active,
-        ?string $description=null
-) {
-        $this->setEmail($email);
-        $this->setPassword($password);
-        $this->setName($name);
-        $this->setUserType($userType);
-        $this->setExperienceLevel($experienceLevel);
-        $this->setLocationId($locationId);
-        $this->setSparkCount($sparkCount);
-        $this->setFollowingCount($followingCount);
-        $this->setFollowerCount($followedCount);
-        $this->setLastLogin($lastLogin);
-        $this->setImage($image);
-        $this->setStatus($status);
-        $this->setDescription($description);
+    public function __construct(array $param)
+    {
+        $this->setDataByParam($param);
     }
 
+    public function setDataByParam(array $param): void
+    {
+        $this->setEmail($param["email"]);
+        $this->setPassword($param["password"]);
+        $this->setName($param["name"] ?? null);
+        $this->setUserType($param["user_type"] ?? null);
+        $this->setExperienceLevel($param["experience_level"] ?? null);
+        $this->setLocationId($param["location_id"] ?? null);
+        $this->setSparkCount($param["spark_count"] ?? 0);
+        $this->setFollowingCount($param["following_count"] ?? 0);
+        $this->setFollowerCount($param["follower_count"] ?? 0);
+        $this->setLastLogin($param["last_login"] ?? null);
+        $this->setImage($param["image"] ?? null);
+        $this->setStatus($param["status"] ?? UserStatus::ACTIVE);
+        $this->setDescription($param["description"] ?? null);
+    }
 
     /**
      * @return string|null
@@ -372,5 +352,4 @@ class User extends BaseDomainModel
     {
         $this->followingCount--;
     }
-
 }
