@@ -51,7 +51,7 @@ class LoginService
 		if ($validator->fails()) {
 			return $this->handleApiResponse('error', $validator->errors()->first());
 		}
-		$newUser = new User($param['email'], bcrypt($param['password']), $param['name']);
+		$newUser = new User($param);
 		$this->userRepository->save($newUser);
 
 		return $this->handleApiResponse();

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Sparkr\Domain\Base\BaseDomainModel;
 use Sparkr\Domain\MasterDataManagement\Location\Models\Location;
+use Sparkr\Domain\UserManagement\User\Enums\UserParam;
 use Sparkr\Domain\UserManagement\User\Enums\UserStatus;
 use Sparkr\Utility\Enums\Status;
 
@@ -48,50 +49,30 @@ class User extends BaseDomainModel
 
     /**
      * User constructor.
-     * @param  string  $email
-     * @param  string  $password
-     * @param  string|null  $name
-     * @param  int|null  $userType
-     * @param  int|null  $experienceLevel
-     * @param  int|null  $locationId
-     * @param  int|null  $sparkCount
-     * @param  int|null  $followingCount
-     * @param  int|null  $followedCount
-     * @param  Carbon|null  $lastLogin
-     * @param  string|null  $image
-     * @param  int|null  $status
-     * @param  string|null  $description
+     * @param array $param
+     *
      */
-    public function __construct(
-        string $email,
-        string $password,
-        ?string $name =null,
-        ?int $userType=null,
-        ?int $experienceLevel=null,
-        ?int $locationId=null,
-        ?int $sparkCount=0,
-        ?int $followingCount=0,
-        ?int $followedCount=0,
-        ?Carbon $lastLogin=null,
-        ?string $image=null,
-        ?int $status=UserStatus::Active,
-        ?string $description=null
-) {
-        $this->setEmail($email);
-        $this->setPassword($password);
-        $this->setName($name);
-        $this->setUserType($userType);
-        $this->setExperienceLevel($experienceLevel);
-        $this->setLocationId($locationId);
-        $this->setSparkCount($sparkCount);
-        $this->setFollowingCount($followingCount);
-        $this->setFollowerCount($followedCount);
-        $this->setLastLogin($lastLogin);
-        $this->setImage($image);
-        $this->setStatus($status);
-        $this->setDescription($description);
+    public function __construct(array $param)
+    {
+        $this->setDataByParam($param);
     }
 
+    public function setDataByParam(array $param): void
+    {
+        $this->setEmail($param[UserParam::EMAIL]);
+        $this->setPassword($param[UserParam::PASSWORD]);
+        $this->setName($param[UserParam::NAME] ?? null);
+        $this->setUserType($param[UserParam::USER_TYPE] ?? null);
+        $this->setExperienceLevel($param[UserParam::EXPERIENCE_LEVEL] ?? null);
+        $this->setLocationId($param[UserParam::LOCATION_ID] ?? null);
+        $this->setSparkCount($param[UserParam::SPARK_COUNT] ?? 0);
+        $this->setFollowingCount($param[UserParam::FOLLOWING_COUNT] ?? 0);
+        $this->setFollowerCount($param[UserParam::FOLLOWER_COUNT] ?? 0);
+        $this->setLastLogin($param[UserParam::LAST_LOGIN] ?? null);
+        $this->setImage($param[UserParam::IMAGE] ?? null);
+        $this->setStatus($param[UserParam::STATUS] ?? UserStatus::ACTIVE);
+        $this->setDescription($param[UserParam::DESCRIPTION] ?? null);
+    }
 
     /**
      * @return string|null
@@ -230,11 +211,11 @@ class User extends BaseDomainModel
     }
 
     /**
-     * @param  Carbon|null  $lastLogin
+     * @param string $lastLogin
      */
-    public function setLastLogin(?Carbon $lastLogin): void
+    public function setLastLogin(string $lastLogin): void
     {
-        $this->lastLogin = $lastLogin;
+        $this->lastLogin = Carbon::createFromTimestamp($lastLogin);
     }
 
     /**
@@ -372,5 +353,4 @@ class User extends BaseDomainModel
     {
         $this->followingCount--;
     }
-
 }

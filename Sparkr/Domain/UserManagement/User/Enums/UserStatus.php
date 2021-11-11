@@ -10,6 +10,6 @@ use Sparkr\Utility\Enums\IntEnum;
  */
 final class UserStatus extends IntEnum
 {
-    const Active = 1;
-    const Inactive = 0;
+    public const ACTIVE = 1;
+    public const INACTIVE = 0;
 }

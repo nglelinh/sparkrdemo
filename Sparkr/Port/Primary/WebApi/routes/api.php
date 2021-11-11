@@ -50,22 +50,17 @@ Route::group([
         return response('pong', 200);
     });
 });
-Route::post("/refreshToken/", [AccountController::class, 'refreshToken']);
 
+Route::post('login', [AccountController::class, 'login'])->name('login');
+Route::post('register', [AccountController::class, 'register']);
+Route::post('logout', [AccountController::class, 'logout']);
+Route::post("refresh-token", [AccountController::class, 'refreshToken']);
 Route::post('reset-password', [ResetPasswordController::class,'submitResetPassword']);
 Route::get('reset-password', [ResetPasswordController::class,'resetPassword']);
-
-Route::post('forget-password', [ResetPasswordController::class,'sendMail']);
+Route::post('forgot-password', [ResetPasswordController::class,'sendMail']);
 
 Route::group([
-                 'prefix' => 'auth'
+                 'middleware' => 'auth:api'
              ], function () {
-    Route::post('login', [AccountController::class, 'login'])->name('login');
-    Route::post('register', [AccountController::class, 'register']);
-    Route::delete('logout', [AccountController::class, 'logout']);
-    Route::group([
-                     'middleware' => 'auth:api'
-                 ], function () {
-        Route::get('me', [AccountController::class, 'user']);
-    });
+    Route::get('me', [AccountController::class, 'user']);
 });

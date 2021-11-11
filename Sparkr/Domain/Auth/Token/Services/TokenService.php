@@ -68,7 +68,7 @@ class TokenService
 			)->toDateTimeString(),
 			'refresh_token' => $responseObj->refresh_token,
 		];
-		return $this->handleApiResponse('success', 'Login success', $tokenData);
+		return $this->handleApiResponse('success', 'Success', $tokenData);
 	}
 
 	/**
