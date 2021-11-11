@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Sparkr\Domain\Base\BaseDomainModel;
 use Sparkr\Domain\MasterDataManagement\Location\Models\Location;
+use Sparkr\Domain\UserManagement\User\Enums\UserParam;
 use Sparkr\Domain\UserManagement\User\Enums\UserStatus;
 use Sparkr\Utility\Enums\Status;
 
@@ -58,19 +59,19 @@ class User extends BaseDomainModel
 
     public function setDataByParam(array $param): void
     {
-        $this->setEmail($param["email"]);
-        $this->setPassword($param["password"]);
-        $this->setName($param["name"] ?? null);
-        $this->setUserType($param["user_type"] ?? null);
-        $this->setExperienceLevel($param["experience_level"] ?? null);
-        $this->setLocationId($param["location_id"] ?? null);
-        $this->setSparkCount($param["spark_count"] ?? 0);
-        $this->setFollowingCount($param["following_count"] ?? 0);
-        $this->setFollowerCount($param["follower_count"] ?? 0);
-        $this->setLastLogin($param["last_login"] ?? null);
-        $this->setImage($param["image"] ?? null);
-        $this->setStatus($param["status"] ?? UserStatus::ACTIVE);
-        $this->setDescription($param["description"] ?? null);
+        $this->setEmail($param[UserParam::EMAIL]);
+        $this->setPassword($param[UserParam::PASSWORD]);
+        $this->setName($param[UserParam::NAME] ?? null);
+        $this->setUserType($param[UserParam::USER_TYPE] ?? null);
+        $this->setExperienceLevel($param[UserParam::EXPERIENCE_LEVEL] ?? null);
+        $this->setLocationId($param[UserParam::LOCATION_ID] ?? null);
+        $this->setSparkCount($param[UserParam::SPARK_COUNT] ?? 0);
+        $this->setFollowingCount($param[UserParam::FOLLOWING_COUNT] ?? 0);
+        $this->setFollowerCount($param[UserParam::FOLLOWER_COUNT] ?? 0);
+        $this->setLastLogin($param[UserParam::LAST_LOGIN] ?? null);
+        $this->setImage($param[UserParam::IMAGE] ?? null);
+        $this->setStatus($param[UserParam::STATUS] ?? UserStatus::ACTIVE);
+        $this->setDescription($param[UserParam::DESCRIPTION] ?? null);
     }
 
     /**
