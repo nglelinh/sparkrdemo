@@ -53,10 +53,10 @@ Route::group([
 Route::post('login', [AccountController::class, 'login'])->name('login');
 Route::post('register', [AccountController::class, 'register']);
 Route::post('logout', [AccountController::class, 'logout']);
-Route::post("refreshToken", [AccountController::class, 'refreshToken']);
+Route::post("refresh-token", [AccountController::class, 'refreshToken']);
 Route::post('reset-password', [ResetPasswordController::class,'submitResetPassword']);
 Route::get('reset-password', [ResetPasswordController::class,'resetPassword']);
-Route::post('forget-password', [ResetPasswordController::class,'sendMail']);
+Route::post('forgot-password', [ResetPasswordController::class,'sendMail']);
 
 Route::group([
                  'middleware' => 'auth:api'

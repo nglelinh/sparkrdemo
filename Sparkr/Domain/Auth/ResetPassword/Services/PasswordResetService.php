@@ -103,7 +103,7 @@ class PasswordResetService
         }
         return response()->json([
                                     'status' => 'success',
-                                    'message' => 'Valid tokens',
+                                    'message' => 'Valid token',
                                     'data' => [
                                         'email' => $email
                                     ],
