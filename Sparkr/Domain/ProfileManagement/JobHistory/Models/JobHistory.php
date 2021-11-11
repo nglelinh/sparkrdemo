@@ -24,7 +24,7 @@ class JobHistory extends BaseDomainModel
 
     private ?int $jobTypeId;
 
-    private ?int $availabilityId;
+    private ?int $availability;
 
     /**
      * JobHistory constructor.
@@ -35,7 +35,7 @@ class JobHistory extends BaseDomainModel
      * @param  Carbon  $endDate
      * @param  string  $description
      * @param  int|null  $jobTypeId
-     * @param  int|null  $availabilityId
+     * @param  int|null  $availability
      */
     public function __construct(
         int $personalProfileId,
@@ -45,7 +45,7 @@ class JobHistory extends BaseDomainModel
         Carbon $endDate,
         string $description,
         ?int $jobTypeId,
-        ?int $availabilityId
+        ?int $availability
     ) {
         $this->personalProfileId = $personalProfileId;
         $this->title = $title;
@@ -54,7 +54,7 @@ class JobHistory extends BaseDomainModel
         $this->endDate = $endDate;
         $this->description = $description;
         $this->jobTypeId = $jobTypeId;
-        $this->availabilityId = $availabilityId;
+        $this->availability = $availability;
     }
 
     /**
@@ -172,17 +172,17 @@ class JobHistory extends BaseDomainModel
     /**
      * @return int|null
      */
-    public function getAvailabilityId(): ?int
+    public function getAvailability(): ?int
     {
-        return $this->availabilityId;
+        return $this->availability;
     }
 
     /**
-     * @param  int|null  $availabilityId
+     * @param  int|null  $availability
      */
-    public function setAvailabilityId(?int $availabilityId): void
+    public function setAvailability(?int $availability): void
     {
-        $this->availabilityId = $availabilityId;
+        $this->availability = $availability;
     }
-    
+
 }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Sparkr\Port\Primary\WebApi\Controllers\Api\AccountController;
 use Sparkr\Port\Primary\WebApi\Controllers\Api\FollowController;
+use Sparkr\Port\Primary\WebApi\Controllers\Api\JobController;
 use Sparkr\Port\Primary\WebApi\Controllers\Api\ResetPasswordController;
 use Sparkr\Port\Primary\WebApi\Controllers\Api\SparkController;
 use Sparkr\Port\Primary\WebApi\Controllers\Api\UserController;
@@ -27,6 +28,12 @@ Route::group([
         Route::get('/basic-info/{userId}', [UserController::class, 'basicUserInfo']);
         Route::get('/search', [UserController::class, 'userSearch']);
         Route::get('/detail/{userId}', [UserController::class, 'userDetail']);
+        Route::get('/similar/{userId}', [UserController::class, 'similarProfile']);
+    });
+    // Job
+    Route::prefix('job')->group(function () {
+        Route::post('/apply', [JobController::class, 'applyJob']);
+        Route::post('/interested', [JobController::class, 'interestedJob']);
     });
     // Spark
     Route::prefix('spark')->group(function () {

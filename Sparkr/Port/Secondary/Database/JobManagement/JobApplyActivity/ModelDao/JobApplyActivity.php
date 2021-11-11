@@ -4,10 +4,11 @@ namespace Sparkr\Port\Secondary\Database\JobManagement\JobApplyActivity\ModelDao
 
 use Sparkr\Domain\JobManagement\JobApplyActivity\Models\JobApplyActivity as JobDomainModel;
 use Sparkr\Port\Secondary\Database\Base\BaseModel;
+use Sparkr\Port\Secondary\Database\JobManagement\JobApplyActivity\Traits\JobApplyActivityRelationshipTrait;
 
 class JobApplyActivity extends BaseModel
 {
-
+    use JobApplyActivityRelationshipTrait;
     /**
      * The table associated with the model.
      *
@@ -22,6 +23,10 @@ class JobApplyActivity extends BaseModel
             $this->personal_profile_id,
         );
         $job->setId($this->getKey());
+
+        if ($this->relationLoaded('personalProfile')) {
+            $job->setPersonalProfile($this->personalProfile?->toDomainEntity());
+        }
 
         return $job;
     }

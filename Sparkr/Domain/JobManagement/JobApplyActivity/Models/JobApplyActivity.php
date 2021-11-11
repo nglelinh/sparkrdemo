@@ -3,6 +3,7 @@
 namespace Sparkr\Domain\JobManagement\JobApplyActivity\Models;
 
 use Sparkr\Domain\Base\BaseDomainModel;
+use Sparkr\Domain\ProfileManagement\PersonalProfile\Models\PersonalProfile;
 
 /**
  *
@@ -12,6 +13,8 @@ class JobApplyActivity extends BaseDomainModel
     private int $jobId;
 
     private int $personalProfileId;
+
+    private PersonalProfile $personalProfile;
 
     /**
      * JobApplyActivity constructor.
@@ -54,6 +57,22 @@ class JobApplyActivity extends BaseDomainModel
     public function setPersonalProfileId(int $personalProfileId): void
     {
         $this->personalProfileId = $personalProfileId;
+    }
+
+    /**
+     * @return PersonalProfile
+     */
+    public function getPersonalProfile(): PersonalProfile
+    {
+        return $this->personalProfile;
+    }
+
+    /**
+     * @param  PersonalProfile  $personalProfile
+     */
+    public function setPersonalProfile(PersonalProfile $personalProfile): void
+    {
+        $this->personalProfile = $personalProfile;
     }
 
 

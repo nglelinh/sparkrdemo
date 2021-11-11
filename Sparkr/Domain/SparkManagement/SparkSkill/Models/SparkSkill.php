@@ -121,7 +121,7 @@ class SparkSkill extends BaseDomainModel
         $this->user = $user;
     }
 
-    public function addOneSpark(): void
+    public function incrementSpark(): void
     {
         $this->sparkSkillCount++;
     }

@@ -14,7 +14,7 @@ interface PersonalProfileRepositoryInterface
 
     /**
      */
-    public function getRecommendPersonalProfile(): Collection;
+    public function getRecommendPersonalProfileList(): Collection;
 
     public function getPersonalProfileList(): Collection;
 
@@ -38,5 +38,7 @@ interface PersonalProfileRepositoryInterface
     public function delete(int $id);
 
     public function getDetailByUserId(int $id): PersonalProfile;
+
+    public function getSimilarPersonalProfileList(PersonalProfile $personalProfile): Collection;
 
 }

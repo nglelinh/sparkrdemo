@@ -25,6 +25,8 @@ class Job extends BaseModel
             $this->job_type_id,
             $this->availability,
             $this->status,
+            $this->applied_job_count,
+            $this->interested_job_count,
         );
         $job->setId($this->getKey());
 
@@ -33,6 +35,16 @@ class Job extends BaseModel
         }
         if ($this->relationLoaded('companyProfile')) {
             $job->setCompanyProfile($this->companyProfile->toDomainEntity());
+        }
+        if ($this->relationLoaded('jobApplyActivities')) {
+            $job->setJobApplyActivities($this->jobApplyActivities?->map(function ($job) {
+                return $job->toDomainEntity();
+            }));
+        }
+        if ($this->relationLoaded('jobInterestedActivities')) {
+            $job->setJobInterestedActivities($this->jobInterestedActivities?->map(function ($job) {
+                return $job->toDomainEntity();
+            }));
         }
         return $job;
     }
@@ -49,6 +61,8 @@ class Job extends BaseModel
         $this->availability = $job->getAvailability();
         $this->description = $job->getDescription();
         $this->status = $job->getStatus();
+        $this->applied_job_count = $job->getAppliedJobCount();
+        $this->interested_job_count = $job->getInterestedJobCount();
 
         return $this;
     }

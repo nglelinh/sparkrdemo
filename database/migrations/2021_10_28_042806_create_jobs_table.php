@@ -22,6 +22,8 @@ class CreateJobsTable extends Migration
             $table->tinyInteger('availability')->nullable();
             $table->text('description');
             $table->tinyInteger('status')->default(Status::Active);
+            $table->integer('applied_job_count')->default(0);
+            $table->integer('interested_job_count')->default(0);
             $table->timestamps();
 
             $table->foreign('company_profile_id')->references('id')->on('company_profiles')->cascadeOnDelete();

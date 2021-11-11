@@ -54,7 +54,7 @@ class SparkService
         DB::beginTransaction();
         try {
             $sparkSkill = $this->sparkSkillRepository->getSparkSkillById($sparkId);
-            $sparkSkill->addOneSpark();
+            $sparkSkill->incrementSpark();
             $sparkDetail = new SparkSkillDetail($sparkId, $userGiveSparkId);
 
             $this->sparkSkillRepository->save($sparkSkill);

@@ -2,7 +2,10 @@
 
 namespace Sparkr\Domain\JobManagement\Job\Models;
 
+use Illuminate\Support\Collection;
 use Sparkr\Domain\Base\BaseDomainModel;
+use Sparkr\Domain\JobManagement\JobApplyActivity\Models\JobApplyActivity;
+use Sparkr\Domain\JobManagement\JobInterestedActivity\Models\JobInterestedActivity;
 use Sparkr\Domain\MasterDataManagement\JobType\Models\JobType;
 use Sparkr\Domain\ProfileManagement\CompanyProfile\Models\CompanyProfile;
 use Sparkr\Utility\Enums\Status;
@@ -24,20 +27,27 @@ class Job extends BaseDomainModel
 
     private int $status;
 
+    private int $appliedJobCount;
+
+    private int $interestedJobCount;
+
     private JobType $jobType;
 
     private CompanyProfile $companyProfile;
-
+    private ?Collection $jobApplyActivities;
+    private ?Collection $jobInterestedActivities;
 
 
     /**
      * Job constructor.
      * @param  string  $title
      * @param  int  $companyProfileId
+     * @param  string  $description
      * @param  int|null  $jobTypeId
      * @param  int|null  $availabilityId
-     * @param  string  $description
      * @param  int  $status
+     * @param  int  $appliedJobCount
+     * @param  int  $interestedJobCount
      */
     public function __construct(
         string $title,
@@ -45,14 +55,18 @@ class Job extends BaseDomainModel
         string $description,
         ?int $jobTypeId = null,
         ?int $availabilityId = null,
-        int $status = Status::Active
-    ) {
+        int $status = Status::Active,
+        int $appliedJobCount = 0,
+        int $interestedJobCount = 0,
+) {
         $this->title = $title;
         $this->companyProfileId = $companyProfileId;
         $this->jobTypeId = $jobTypeId;
         $this->availability = $availabilityId;
         $this->description = $description;
         $this->status = $status;
+        $this->appliedJobCount = $appliedJobCount;
+        $this->interestedJobCount = $interestedJobCount;
     }
 
     /**
@@ -183,5 +197,88 @@ class Job extends BaseDomainModel
         $this->companyProfile = $companyProfile;
     }
 
+    /**
+     * @return Collection|null
+     */
+    public function getJobApplyActivities(): ?Collection
+    {
+        return $this->jobApplyActivities;
+    }
+
+    /**
+     * @param  Collection|null  $jobApplyActivities
+     */
+    public function setJobApplyActivities(?Collection $jobApplyActivities): void
+    {
+        $this->jobApplyActivities = $jobApplyActivities;
+    }
+
+    /**
+     * @return Collection|null
+     */
+    public function getJobInterestedActivities(): ?Collection
+    {
+        return $this->jobInterestedActivities;
+    }
+
+    /**
+     * @param  Collection|null  $jobInterestedActivities
+     */
+    public function setJobInterestedActivities(?Collection $jobInterestedActivities): void
+    {
+        $this->jobInterestedActivities = $jobInterestedActivities;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAppliedJobCount(): int
+    {
+        return $this->appliedJobCount;
+    }
+
+    /**
+     * @param  int  $appliedJobCount
+     */
+    public function setAppliedJobCount(int $appliedJobCount): void
+    {
+        $this->appliedJobCount = $appliedJobCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInterestedJobCount(): int
+    {
+        return $this->interestedJobCount;
+    }
+
+    /**
+     * @param  int  $interestedJobCount
+     */
+    public function setInterestedJobCount(int $interestedJobCount): void
+    {
+        $this->interestedJobCount = $interestedJobCount;
+    }
+
+    public function incrementAppliedJobCount(): void
+    {
+        $this->appliedJobCount++;
+    }
+
+    public function decrementAppliedJobCount(): void
+    {
+        $this->appliedJobCount--;
+    }
+
+    public function incrementInterestedJobCount(): void
+    {
+        $this->interestedJobCount++;
+    }
+
+    public function decrementOneInterestedJobCount(): void
+    {
+        $this->interestedJobCount--;
+    }
 
 }
